@@ -55,27 +55,27 @@ const TetrominoShapes = {
 	]
 };
 
+function getTetrominoColor(piece) {
+    const colorMap = {
+        "I_Piece": "cyan",
+        "J_Piece": "blue",
+        "L_Piece": "orange",
+        "O_Piece": "yellow",
+        "S_Piece": "green",
+        "T_Piece": "purple",
+        "Z_Piece": "red"
+    };
+    return colorMap[piece];
+}
+
 function getRandomTetromino() {
 	const options = Object.values(Tetromino);
 	return options[Math.floor(Math.random() * options.length)];
 }
 
-function getRandomColour() {
-	const options = [
-		"cyan",
-		"blue",
-		"orange",
-		"yellow",
-		"green",
-		"purple",
-		"red"
-	];
-	return options[Math.floor(Math.random() * options.length)];
-}
-
 export const emptyGameState = {
 	// A 10x20 array full of null values
-	playfield: new Array(BOARD_UNITS_HEIGHT).fill(new Array(BOARD_UNITS_WIDTH).fill(null)),
+	playfield: new Array(BOARD_UNITS_HEIGHT).fill(null).map(() => new Array(BOARD_UNITS_WIDTH).fill(null)),
 	score: 0,
 	upcomingTetrominoes: Array.from({length: 3}, getRandomTetromino),
 	heldTetromino: null,
@@ -84,16 +84,18 @@ export const emptyGameState = {
 			const tetromino = getRandomTetromino();
 			return {
 				name: tetromino,
-				tiles: TetrominoShapes[tetromino]
+				tiles: TetrominoShapes[tetromino],
+				colour: getTetrominoColor(tetromino)
 			};
 		}()),
 		position: {
 			x: (BOARD_UNITS_WIDTH - 4) / 2,
 			y: BOARD_UNITS_HEIGHT - 1, // Top row is reserved for game over
-		},
-		colour: getRandomColour()
+		}
 	}
 };
+
+
 
 export default function createGame(initialGameState = emptyGameState) {
 	const tetrisGame = {
@@ -104,10 +106,20 @@ export default function createGame(initialGameState = emptyGameState) {
 		 */
 		gameTick: function() {
 			// 1: Move currently active piece down
+			this.gameState.activeTetromino.position.y -= 1;
+
 			// 2: Lock piece in place if it can't move down anymore
+
+
 			// 3: Clear any full lines
+			
+			
 			// 4: Increase score
+			
+			
 			// 5: Get new piece from upcoming tetrominoes
+
+
 		},
 
 		/**
@@ -120,13 +132,13 @@ export default function createGame(initialGameState = emptyGameState) {
 
 		/**
 		 * Return the tile at the given position
-		 * If there is a tile, return it's colour
+		 * If there is a tile, return its colour
 		 * @return {null | string}
 		 *
 		 * Possible colours: "cyan, blue, orange, yellow, green, purple, red"
 		 */
 		getTileAtPosition: function(x, y) {
-
+			
 		},
 
 		/**
