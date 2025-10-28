@@ -267,6 +267,101 @@ export default function createGame(initialGameState = emptyGameState) {
 		holdCurrentTetromino: function() {
 
 		},
+
+		/**
+		 * Load the next tetromino from the upcoming queue and add a new random one to the queue
+		 */
+		loadNextTetrimino: function() {
+			
+		},
+
+		/**
+		 * Debug controls, will be removed for release
+		 * Spawn a specific piece at the top of the board (for testing purposes)
+		 */
+		spawnI_Piece: function() {
+			this.gameState.activeTetromino = {
+				name: Tetromino.I_Piece,
+				tiles: TetrominoShapes.I_Piece,
+				colour: getTetrominoColor(Tetromino.I_Piece),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				}
+			};
+		},
+
+		spawnJ_Piece: function() {
+			this.gameState.activeTetromino = {
+				name: Tetromino.J_Piece,
+				tiles: TetrominoShapes.J_Piece,
+				colour: getTetrominoColor(Tetromino.J_Piece),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				}
+			};
+		},
+
+		spawnL_Piece: function() {
+			this.gameState.activeTetromino = {
+				name: Tetromino.L_Piece,
+				tiles: TetrominoShapes.L_Piece,
+				colour: getTetrominoColor(Tetromino.L_Piece),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				}
+			};
+		},
+
+		spawnO_Piece: function() {
+			this.gameState.activeTetromino = {
+				name: Tetromino.O_Piece,
+				tiles: TetrominoShapes.O_Piece,
+				colour: getTetrominoColor(Tetromino.O_Piece),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				}
+			};
+		},
+
+		spawnS_Piece: function() {
+			this.gameState.activeTetromino = {
+				name: Tetromino.S_Piece,
+				tiles: TetrominoShapes.S_Piece,
+				colour: getTetrominoColor(Tetromino.S_Piece),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				}
+			};
+		},
+
+		spawnZ_Piece: function() {
+			this.gameState.activeTetromino = {
+				name: Tetromino.Z_Piece,
+				tiles: TetrominoShapes.Z_Piece,
+				colour: getTetrominoColor(Tetromino.Z_Piece),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				}
+			};
+		},
+
+		spawnT_Piece: function() {
+			this.gameState.activeTetromino = {
+				name: Tetromino.T_Piece,
+				tiles: TetrominoShapes.T_Piece,
+				colour: getTetrominoColor(Tetromino.T_Piece),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				}
+			};
+		}
 	};
 
 	return tetrisGame;
