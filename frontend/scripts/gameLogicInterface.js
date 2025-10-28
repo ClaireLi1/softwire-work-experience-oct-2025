@@ -271,7 +271,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		/**
 		 * Load the next tetromino from the upcoming queue and add a new random one to the queue
 		 */
-		loadNextTetrimino: function() {
+		loadNextTetromino: function() {
 			
 		},
 
