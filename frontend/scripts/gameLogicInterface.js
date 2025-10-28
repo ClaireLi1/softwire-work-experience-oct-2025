@@ -73,6 +73,31 @@ function getRandomTetromino() {
 	return options[Math.floor(Math.random() * options.length)];
 }
 
+/* transpose function */
+function rotateArray(tiles, direction) {
+	var newArray = [[0, 0, 0, 0], 
+					[0, 0, 0, 0], 
+					[0, 0, 0, 0], 
+					[0, 0, 0, 0]];
+
+	if (direction === "cw") {
+		for (let i = 0; i < 4; i++) {
+			for (let j = 0; j < 4; j++) {
+				newArray[i][j] = tiles[j][3-i]
+			}
+		}
+	}
+	else {
+		for (let i = 0; i < 4; i++) {
+			for (let j = 0; j < 4; j++) {
+				newArray[j][3-i] = tiles[i][j]
+			}
+		}
+	}
+
+	return newArray;
+}
+
 export const emptyGameState = {
 	// A 10x20 array full of null values
 	playfield: new Array(BOARD_UNITS_HEIGHT).fill(null).map(() => new Array(BOARD_UNITS_WIDTH).fill(null)),
@@ -198,18 +223,20 @@ export default function createGame(initialGameState = emptyGameState) {
 
 		},
 
+
+
 		/**
 		 * Rotate the current tetromino clockwise 90 degrees
 		 */
-		rotateTetrominoClockwise: function() {
-
+		rotateTetrominoClockwise: function() { /* tranpose */
+			this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "cw")
 		},
 
 		/**
 		 * Rotate the current tetromino anti-clockwise 90 degrees
 		 */
 		rotateTetrominoAntiClockwise: function() {
-
+			this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "acw")
 		},
 
 		/**
