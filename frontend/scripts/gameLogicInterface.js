@@ -188,8 +188,9 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Move the current tetromino left 1 tile
 		 */
 		moveLeft: function() {
-
+			// test
 		},
+
 
 		/**
 		 * Move the current tetromino right 1 tile
