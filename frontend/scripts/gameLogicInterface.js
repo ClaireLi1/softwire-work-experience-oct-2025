@@ -107,7 +107,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		gameTick: function() {
 			// 1: Move currently active piece down
 			this.gameState.activeTetromino.position.y -= 1;
-
+			
 			// 2: Lock piece in place if it can't move down anymore
 
 
@@ -188,13 +188,15 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Move the current tetromino left 1 tile
 		 */
 		moveLeft: function() {
-
+			this.gameState.activeTetromino.position.x -= 1;
 		},
+
 
 		/**
 		 * Move the current tetromino right 1 tile
 		 */
 		moveRight: function() {
+			this.gameState.activeTetromino.position.x += 1;
 
 		},
 
