@@ -163,7 +163,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Possible colours: "cyan, blue, orange, yellow, green, purple, red"
 		 */
 		getTileAtPosition: function(x, y) {
-			
+			return this.gameState.playfield[y][x];
 		},
 
 		/**
@@ -171,7 +171,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * @return {int}
 		 */
 		getScore: function() {
-
+			return this.gameState.score;
 		},
 
 		/**
@@ -189,7 +189,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * @return {Array<Tetromino>}
 		 */
 		getUpcomingTetrominoes: function() {
-
+			return this.gameState.upcomingTetrominoes;
 		},
 
 		/**
@@ -197,7 +197,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * @return {null | Tetromino}
 		 */
 		getHeldTetromino: function() {
-
+			return this.gameState.heldTetromino;
 		},
 
 		/**
@@ -216,16 +216,12 @@ export default function createGame(initialGameState = emptyGameState) {
 			this.gameState.activeTetromino.position.x -= 1;
 		},
 
-
 		/**
 		 * Move the current tetromino right 1 tile
 		 */
 		moveRight: function() {
 			this.gameState.activeTetromino.position.x += 1;
-
 		},
-
-
 
 		/**
 		 * Rotate the current tetromino clockwise 90 degrees
