@@ -15,18 +15,11 @@ function initialiseGame() {
 
     // Start the game loop
     setInterval(() => {
-        updateGame();
-        
+        game.gameTick();
+        drawGame(game);
     }, GAME_TICK_INTERVAL_MS);
 
     return game;
-}
-
-function updateGame() {
-    game.gameTick();
-    drawGame(game);
-
-    // other things that should happen each game tick to be added here
 }
 
 function setupControls() {
@@ -62,8 +55,6 @@ function setupControls() {
                 game.rotateTetrominoAntiClockwise();
                 drawGame(game);
                 break;
-            
         }
-        drawGameState();
     });
 }

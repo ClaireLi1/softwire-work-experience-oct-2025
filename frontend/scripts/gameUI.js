@@ -29,7 +29,7 @@ export function drawGame(game) {
 
     for (var y=0; y<BOARD_UNITS_HEIGHT; y++) {
         for (var x=0; x<BOARD_UNITS_WIDTH; x++) {
-            const tileColour = getTileAt(game, {x: x, y: y});
+            const tileColour = game.getTileAtPosition(x, y);
             if (tileColour !== null && tileColour !== undefined) {
                 gameContext.fillStyle = tileColour;
                 gameContext.fillRect(
@@ -55,27 +55,4 @@ function addHorizontalGameLines(gameContext) {
         gameContext.moveTo(0, yPosition);
         gameContext.lineTo(BOARD_WIDTH, yPosition);
     }
-}
-
-function getTileAt(game, position) {
-    const { playfield, activeTetromino } = game.gameState;
-    const { tiles, colour } = activeTetromino;
-    const { x: posX, y: posY } = position;
-
-    // Check active tetromino first
-    const relativeX = posX - activeTetromino.position.x;
-    const relativeY = posY - activeTetromino.position.y;
-    if (
-        relativeX >= 0 &&
-        relativeX < tiles[0].length &&
-        relativeY >= 0 &&
-        relativeY < tiles.length
-    ) {
-        if (tiles[relativeY][relativeX] === 1) {
-            return colour;
-        }
-    }
-
-    // Then check playfield
-    return game.getTileAtPosition(posX, posY);
 }
