@@ -115,7 +115,7 @@ function checkCollision(playfield,activeTetromino) {
 				}
 			}
 
-			if (yValue <1){
+			if (yValue <0){
 				return true
 			}
 
@@ -127,20 +127,23 @@ function checkCollision(playfield,activeTetromino) {
 	return false
 }
 
-function lockCollision(playfield,activeTetromino) {
-	const colour=activeTetromino.colour
-	const tiles=activeTetromino.tiles
-	const position=activeTetromino.position
+function lockCollision(playfield, activeTetromino) {
+    const colour = activeTetromino.colour;
+    const tiles = activeTetromino.tiles;
+    const position = activeTetromino.position;
 
-	if (checkCollision(initialGameState.playfield,initialGameState.activeTetromino)) {
-		for (let r=0; r<4; r++) {
-			for (let c=0; c<4;c++) {
-				if(tiles[r][c]===0) {
-					continue;
-				}
-			}
-		}
-	}
+    for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 4; c++) {
+            if (tiles[r][c] === 1) {
+                const xValue = c + position.x;
+                const yValue = r + position.y;
+
+                if (yValue >= 0 && yValue < BOARD_UNITS_HEIGHT && xValue >= 0 && xValue < BOARD_UNITS_WIDTH) {
+                    playfield[yValue][xValue] = colour;
+                }
+            }
+        }
+    }
 }
 
 
@@ -180,7 +183,13 @@ export default function createGame(initialGameState = emptyGameState) {
 			this.gameState.activeTetromino.position.y -= 1;
 
 			// 2: Lock piece in place if it can't move down anymore
-			checkCollision(initialGameState.playfield,initialGameState.activeTetromino)
+
+			const collideValue=checkCollision(initialGameState.playfield,initialGameState.activeTetromino)
+
+			if (collideValue != false) {
+				lockCollision(initialGameState.playfield,initialGameState.activeTetromino)
+			}
+
 
 
 			// 3: Clear any full lines
