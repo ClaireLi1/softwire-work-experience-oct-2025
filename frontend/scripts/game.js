@@ -58,7 +58,7 @@ function setupControls() {
             //     game.rotateTetrominoAntiClockwise();
             //     drawGame(game);
             //     break;
-            
+
             /* Debug controls, will be removed for release */
             case 'i':
             case 'I':
