@@ -75,22 +75,22 @@ function getRandomTetromino() {
 
 /* transpose function */
 function rotateArray(tiles, direction) {
-	var newArray = [[0, 0, 0, 0], 
-					[0, 0, 0, 0], 
-					[0, 0, 0, 0], 
-					[0, 0, 0, 0]];
+	var newArray = [[0, 0, 0, 0],
+	[0, 0, 0, 0],
+	[0, 0, 0, 0],
+	[0, 0, 0, 0]];
 
 	if (direction === "cw") {
 		for (let i = 0; i < 4; i++) {
 			for (let j = 0; j < 4; j++) {
-				newArray[i][j] = tiles[j][3-i]
+				newArray[i][j] = tiles[j][3 - i]
 			}
 		}
 	}
 	else {
 		for (let i = 0; i < 4; i++) {
 			for (let j = 0; j < 4; j++) {
-				newArray[j][3-i] = tiles[i][j]
+				newArray[j][3 - i] = tiles[i][j]
 			}
 		}
 	}
@@ -132,7 +132,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		gameTick: function () {
 			// 1: Move currently active piece down
 			this.gameState.activeTetromino.position.y -= 1;
-			
+
 			// 2: Lock piece in place if it can't move down anymore
 
 
@@ -162,7 +162,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 *
 		 * Possible colours: "cyan, blue, orange, yellow, green, purple, red"
 		 */
-		getTileAtPosition: function(posX, posY) {
+		getTileAtPosition: function (posX, posY) {
 			const { position, tiles, colour } = this.gameState.activeTetromino;
 
 			// Check active tetromino first
@@ -187,7 +187,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Return the score of the game
 		 * @return {int}
 		 */
-		getScore: function() {
+		getScore: function () {
 			return this.gameState.score;
 		},
 
@@ -205,7 +205,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Get any upcoming tetrominoes
 		 * @return {Array<Tetromino>}
 		 */
-		getUpcomingTetrominoes: function() {
+		getUpcomingTetrominoes: function () {
 			return this.gameState.upcomingTetrominoes;
 		},
 
@@ -213,8 +213,22 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Return the tetromino currently being held, if any
 		 * @return {null | Tetromino}
 		 */
-		getHeldTetromino: function() {
+		getHeldTetromino: function () {
 			return this.gameState.heldTetromino;
+		},
+
+		/**
+		 * Return a render-friendly object for the held tetromino, or null if none.
+		 * @return {null | {name: string, tiles: number[][], colour: string}}
+		 */
+		getHeldTetrominoDetails: function () {
+			const name = this.gameState.heldTetromino;
+			if (!name) return null;
+			return {
+				name,
+				tiles: TetrominoShapes[name],
+				colour: getTetrominoColor(name),
+			};
 		},
 
 		/**
@@ -229,28 +243,28 @@ export default function createGame(initialGameState = emptyGameState) {
 		/**
 		 * Move the current tetromino left 1 tile
 		 */
-		moveLeft: function() {
+		moveLeft: function () {
 			this.gameState.activeTetromino.position.x -= 1;
 		},
 
 		/**
 		 * Move the current tetromino right 1 tile
 		 */
-		moveRight: function() {
+		moveRight: function () {
 			this.gameState.activeTetromino.position.x += 1;
 		},
 
 		/**
 		 * Rotate the current tetromino clockwise 90 degrees
 		 */
-		rotateTetrominoClockwise: function() { /* tranpose */
+		rotateTetrominoClockwise: function () { /* tranpose */
 			this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "cw")
 		},
 
 		/**
 		 * Rotate the current tetromino anti-clockwise 90 degrees
 		 */
-		rotateTetrominoAntiClockwise: function() {
+		rotateTetrominoAntiClockwise: function () {
 			this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "acw")
 		},
 
@@ -266,11 +280,9 @@ export default function createGame(initialGameState = emptyGameState) {
 		 */
 		holdCurrentTetromino: function () {
 			const state = this.gameState;
-			
+
 			// Name of the currently active tetromino
 			const activeName = state.activeTetromino.name;
-
-
 
 			// If there is a held tetromino already, swap them
 			if (state.heldTetromino) {
@@ -289,8 +301,6 @@ export default function createGame(initialGameState = emptyGameState) {
 					tiles: TetrominoShapes[previouslyHeld].map(row => row.slice()),
 					colour: getTetrominoColor(previouslyHeld),
 					position: activePosition
-
-					
 				};
 			} else {
 				// No held piece: move active to held and spawn next from upcoming list
@@ -311,21 +321,24 @@ export default function createGame(initialGameState = emptyGameState) {
 					}
 				};
 			}
-			drawHeldPiece(this);
+
+			// Call this to redraw the held piece
+			// UI is responsible for redrawing; do not call into UI from game logic (avoids circular imports)
 		},
+
 
 		/**
 		 * Load the next tetromino from the upcoming queue and add a new random one to the queue
 		 */
-		loadNextTetromino: function() {
-			
+		loadNextTetromino: function () {
+
 		},
 
 		/**
 		 * Debug controls, will be removed for release
 		 * Spawn a specific piece at the top of the board (for testing purposes)
 		 */
-		spawnI_Piece: function() {
+		spawnI_Piece: function () {
 			this.gameState.activeTetromino = {
 				name: Tetromino.I_Piece,
 				tiles: TetrominoShapes.I_Piece,
@@ -337,7 +350,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			};
 		},
 
-		spawnJ_Piece: function() {
+		spawnJ_Piece: function () {
 			this.gameState.activeTetromino = {
 				name: Tetromino.J_Piece,
 				tiles: TetrominoShapes.J_Piece,
@@ -349,7 +362,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			};
 		},
 
-		spawnL_Piece: function() {
+		spawnL_Piece: function () {
 			this.gameState.activeTetromino = {
 				name: Tetromino.L_Piece,
 				tiles: TetrominoShapes.L_Piece,
@@ -361,7 +374,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			};
 		},
 
-		spawnO_Piece: function() {
+		spawnO_Piece: function () {
 			this.gameState.activeTetromino = {
 				name: Tetromino.O_Piece,
 				tiles: TetrominoShapes.O_Piece,
@@ -373,7 +386,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			};
 		},
 
-		spawnS_Piece: function() {
+		spawnS_Piece: function () {
 			this.gameState.activeTetromino = {
 				name: Tetromino.S_Piece,
 				tiles: TetrominoShapes.S_Piece,
@@ -385,7 +398,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			};
 		},
 
-		spawnZ_Piece: function() {
+		spawnZ_Piece: function () {
 			this.gameState.activeTetromino = {
 				name: Tetromino.Z_Piece,
 				tiles: TetrominoShapes.Z_Piece,
@@ -397,7 +410,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			};
 		},
 
-		spawnT_Piece: function() {
+		spawnT_Piece: function () {
 			this.gameState.activeTetromino = {
 				name: Tetromino.T_Piece,
 				tiles: TetrominoShapes.T_Piece,
@@ -407,7 +420,7 @@ export default function createGame(initialGameState = emptyGameState) {
 					y: BOARD_UNITS_HEIGHT - 1,
 				}
 			};
-		} 
+		}
 	};
 	return tetrisGame;
 };
