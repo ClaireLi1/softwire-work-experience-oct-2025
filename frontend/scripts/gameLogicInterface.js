@@ -218,7 +218,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			// 2: Lock piece in place if it can't move down anymore
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
-
+			const upcomingTetromino = this.gameState.upcomingTetrominoes
 
 			const collideValue = checkCollision(playfield,activeTetromino)
 
@@ -226,6 +226,7 @@ export default function createGame(initialGameState = emptyGameState) {
 				this.gameState.activeTetromino.position.y -= 1;
 			} else {
 				lockCollision(playfield,activeTetromino)
+				this.getUpcomingTetrominoes();
 			}
 
 
@@ -300,11 +301,28 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Get any upcoming tetrominoes
 		 * @return {Array<Tetromino>}
 		 */
+
 		getUpcomingTetrominoes: function () {
-			return this.gameState.upcomingTetrominoes;
+			const state = this.gameState;
+			const nextTetromino = state.upcomingTetrominoes.shift();
+
+			state.upcomingTetrominoes.push(getRandomTetromino());
+
+			state.activeTetromino = {
+				name: nextTetromino,
+				tiles: TetrominoShapes[nextTetromino],
+				colour: getTetrominoColor(nextTetromino),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				},
+			};
 		},
 
+
+
 		/**
+		 * 
 		 * Return the tetromino currently being held, if any
 		 * @return {null | Tetromino}
 		 */
@@ -353,7 +371,20 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Move the current tetromino down and increase fall speed
 		 */
 		moveDown: function() {
-			this.gameState.activeTetromino.position.y -= 1;
+
+			const playfield = this.gameState.playfield
+			const activeTetromino = this.gameState.activeTetromino
+			const upcomingTetromino = this.gameState.upcomingTetrominoes
+
+			const collideValue = checkCollision(playfield,activeTetromino)
+
+			if (!collideValue) {
+				this.gameState.activeTetromino.position.y -= 1;
+			} else {
+				lockCollision(playfield,activeTetromino)
+				this.getUpcomingTetrominoes();
+			}
+
 		},
 
 		/**
