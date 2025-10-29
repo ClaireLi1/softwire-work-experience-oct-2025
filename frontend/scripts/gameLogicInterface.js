@@ -102,7 +102,6 @@ export const emptyGameState = {
 	// A 10x20 array full of null values
 	playfield: new Array(BOARD_UNITS_HEIGHT).fill(null).map(() => new Array(BOARD_UNITS_WIDTH).fill(null)),
 	score: 0,
-	gameSpeed: 1, // Normal speed is 1, can be increased for faster drops
 	upcomingTetrominoes: Array.from({length: 3}, getRandomTetromino),
 	heldTetromino: null,
 	activeTetromino: {
@@ -245,8 +244,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Move the current tetromino down and increase fall speed
 		 */
 		moveDown: function() {
-			this.gameState.gameSpeed = 5; // Increase speed when down key is pressed
-			this.gameState.activeTetromino.position.y += 1;
+			this.gameState.activeTetromino.position.y -= 1;
 		},
 
 		/**
