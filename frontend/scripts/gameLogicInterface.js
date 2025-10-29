@@ -109,10 +109,8 @@ function checkCollision(playfield,activeTetromino) {
 			const xValue = c + position.x
 			const yValue = (r + position.y) - 1
 			
-			if (playfield[yValue]) {
-				if (playfield[yValue][xValue]) {
-					return true
-				}
+			if (playfield[yValue][xValue]) {
+				return true
 			}
 
 			if (yValue < 0){
