@@ -9,6 +9,9 @@ export function drawGrid(){
     var gameCanvas=document.getElementById("game-grid");
     gameCanvas.setAttribute("width", BOARD_WIDTH)
     gameCanvas.setAttribute("height", BOARD_HEIGHT)
+    // Make the displayed size equal to the drawing buffer so the canvas isn't scaled by CSS
+    // gameCanvas.style.width = BOARD_WIDTH + 'px';
+    // gameCanvas.style.height = BOARD_HEIGHT + 'px';
 
     var gameContext = gameCanvas.getContext("2d");
     addHorizontalGameLines(gameContext);
@@ -20,6 +23,9 @@ export function drawGame(game) {
     var gameCanvas=document.getElementById("game-grid");
     gameCanvas.setAttribute("width", BOARD_WIDTH)
     gameCanvas.setAttribute("height", BOARD_HEIGHT)
+    // Ensure displayed size matches internal resolution to keep tile pixels consistent
+    // gameCanvas.style.width = BOARD_WIDTH + 'px';
+    // gameCanvas.style.height = BOARD_HEIGHT + 'px';
 
     var gameContext = gameCanvas.getContext("2d");
     gameContext.clearRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
@@ -41,6 +47,9 @@ export function drawGame(game) {
             }
         }
     }
+
+    // Also update held-piece display whenever the main board is drawn
+    try { drawHeldPiece(game); } catch (e) { /* ignore if UI not present */ }
 }
 
 function addVerticalGameLines(gameContext) {
@@ -56,3 +65,54 @@ function addHorizontalGameLines(gameContext) {
         gameContext.lineTo(BOARD_WIDTH, yPosition);
     }
 }
+
+export function drawHeldPiece(game) {
+    const gameCanvas = document.getElementById("held-piece-container");
+    if (!gameCanvas) return;
+    const gameContext = gameCanvas.getContext("2d");
+
+    // Set the held-piece canvas to a fixed displayed width (user requested 300px)
+    // Keep tiles drawn at the same size as the main grid (BOARD_UNIT_PIXEL_SIZE)
+    const canvasSize = 300; // displayed and buffer size in pixels
+    gameCanvas.setAttribute("width", canvasSize);
+    gameCanvas.setAttribute("height", canvasSize);
+    // Also set the displayed size so CSS doesn't scale the canvas; keep it fixed
+    gameCanvas.style.width = canvasSize + 'px';
+    gameCanvas.style.height = canvasSize + 'px';
+
+    // Clear the canvas before redrawing
+    gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+    const held = typeof game.getHeldTetrominoDetails === 'function'
+        ? game.getHeldTetrominoDetails()
+        : null;
+
+    if (!held) return; // If there's no held piece, return early
+
+    const tiles = held.tiles;
+    const colour = held.colour;
+
+    if (!tiles || !Array.isArray(tiles) || !colour) return;
+
+    // Draw each tile in the held tetromino
+    gameContext.fillStyle = colour;
+
+    // Ensure the tetromino is centered in the canvas
+    const offsetX = (canvasSize - tiles[0].length * BOARD_UNIT_PIXEL_SIZE) / 2;
+    const offsetY = (canvasSize - tiles.length * BOARD_UNIT_PIXEL_SIZE) / 2;
+
+    // Iterate over the tiles and draw the pieces
+    for (let y = 0; y < tiles.length; y++) {
+        for (let x = 0; x < tiles[y].length; x++) {
+            if (tiles[y][x] === 1) { // If this position has part of the tetromino
+                gameContext.fillRect(
+                    offsetX + x * BOARD_UNIT_PIXEL_SIZE,
+                    offsetY + y * BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE
+                );
+            }
+        }
+    }
+}
+
