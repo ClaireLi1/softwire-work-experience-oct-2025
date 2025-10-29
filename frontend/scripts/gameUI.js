@@ -1,3 +1,5 @@
+import { getTetrominoColor, previewTetros } from "./gameLogicInterface.js";
+
 export const BOARD_UNITS_WIDTH = 10;
 export const BOARD_UNITS_HEIGHT = 20;
 const BOARD_UNIT_PIXEL_SIZE = 40;
@@ -15,6 +17,51 @@ export function drawGrid(){
     addHorizontalGameLines(gameContext);
     addVerticalGameLines(gameContext);
     gameContext.stroke();
+}
+
+/* 
+* add absolute widths and heights to previewtetros dict to help w centering 
+* add conditions to function for centering with odd width/height blocks */
+function drawPreviewTetromino(tetro, offset) {
+    var canvas = document.getElementById("upcoming-pieces-container");
+    var ctx = canvas.getContext("2d");
+    let mat = []
+    let pieceHeight = 0
+    let pieceWidth = 0
+    if (tetro === "I_Piece") {
+        mat = previewTetros[tetro].slice(0,1)
+        pieceHeight = previewTetros[tetro][1][0]
+        pieceWidth = previewTetros[tetro][1][1]
+        offset = offset + 20
+    } else {
+        mat = previewTetros[tetro].slice(0,2)
+        pieceHeight = previewTetros[tetro][2][0]
+        pieceWidth = previewTetros[tetro][2][1]
+    }
+
+    console.log("this is piece " + tetro)
+
+    ctx.fillStyle = getTetrominoColor(tetro)
+    ctx.strokeStyle = "black"
+    ctx.lineWidth = 3
+
+    let contWidth = 303.33
+    for (let i = 0; i < pieceHeight; i++) {
+        for (let j = 0; j < pieceWidth; j++) {
+            if (mat[i][j] == 1) {
+                ctx.fillRect(((contWidth-40*pieceWidth)/2)+40*j,(40 + 40*i + offset), 40, 40)
+                ctx.strokeRect(((contWidth-40*pieceWidth)/2)+40*j,(40 + 40*i + offset), 40, 40)
+            } else {
+            }
+        }
+    }
+}
+
+export function drawUpcomingTetrominoes(game) {
+    drawPreviewTetromino(game.gameState.upcomingTetrominoes[0], 0)
+    drawPreviewTetromino(game.gameState.upcomingTetrominoes[1], 120)
+    drawPreviewTetromino(game.gameState.upcomingTetrominoes[2], 240)
+    console.log(game.gameState.upcomingTetrominoes)
 }
 
 export function drawGame(game) {
