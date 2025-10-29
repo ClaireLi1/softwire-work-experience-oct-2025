@@ -1,4 +1,4 @@
-import createGame  from "./gameLogicInterface.js"
+import { createGame, Tetromino } from "./gameLogicInterface.js"
 import { drawGame, drawGrid, drawUpcomingTetrominoes } from "./gameUI.js"
 
 const GAME_TICK_INTERVAL_MS = 1000;
@@ -62,38 +62,38 @@ function setupControls() {
             /* Debug controls, will be removed for release */
             case 'i':
             case 'I':
-                game.spawnI_Piece();
+                game.spawnPiece(Tetromino.I_Piece);
                 drawGame(game);
                 break;
             
             case 'j':
             case 'J':
-                game.spawnJ_Piece();
+                game.spawnPiece(Tetromino.J_Piece);
                 drawGame(game);
                 break;
             case 'l':
             case 'L':
-                game.spawnL_Piece();
+                game.spawnPiece(Tetromino.L_Piece);
                 drawGame(game);
                 break;
             case 'o':
             case 'O':
-                game.spawnO_Piece();
+                game.spawnPiece(Tetromino.O_Piece);
                 drawGame(game);
                 break;
             case 's':
             case 'S':
-                game.spawnS_Piece();
+                game.spawnPiece(Tetromino.S_Piece);
                 drawGame(game);
                 break;
             case 't':
             case 'T':
-                game.spawnT_Piece();
+                game.spawnPiece(Tetromino.T_Piece);
                 drawGame(game);
                 break;
             case 'z':
             case 'Z':
-                game.spawnZ_Piece();
+                game.spawnPiece(Tetromino.Z_Piece);
                 drawGame(game);
                 break;
             /* End debug controls */
