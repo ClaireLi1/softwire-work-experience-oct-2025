@@ -19,16 +19,22 @@ export function drawGrid(){
     gameContext.stroke();
 }
 
+/* 
+* add absolute widths and heights to previewtetros dict to help w centering 
+* add conditions to function for centering with odd width/height blocks */
 function drawPreviewTetromino(tetro, offset) {
     var canvas = document.getElementById("upcoming-pieces-container");
     var ctx = canvas.getContext("2d");
     let mat = previewTetros[tetro]
 
     ctx.fillStyle = getTetrominoColor(tetro)
+    ctx.strokeStyle = "black"
+    ctx.lineWidth = 3
     for (let i = 0; i < 2; i++) {
         for (let j = 0; j < 4; j++) {
             if (mat[i][j] == 1) {
-                ctx.fillRect(80 +40*j,(40 + 40*i + offset), 40, 40)
+                ctx.fillRect(72.67 +40*j,(40 + 40*i + offset), 40, 40)
+                ctx.strokeRect(72.67 +40*j,(40 + 40*i + offset), 40, 40)
             } else {
             }
         }
@@ -39,6 +45,7 @@ export function drawUpcomingTetrominoes(game) {
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[0], 0)
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[1], 120)
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[2], 240)
+    console.log(game.gameState.upcomingTetrominoes)
 }
 
 export function drawGame(game) {

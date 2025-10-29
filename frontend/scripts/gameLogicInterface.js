@@ -81,7 +81,7 @@ export const previewTetros = {
 		[1,1,0,0],
 		[0,1,1,0]
 	],
-	T_View: [
+	T_Piece: [
 		[1,1,1,0],
 		[0,1,0,0]
 	],
