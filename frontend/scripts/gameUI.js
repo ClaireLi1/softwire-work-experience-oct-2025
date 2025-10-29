@@ -9,9 +9,7 @@ export function drawGrid(){
     var gameCanvas=document.getElementById("game-grid");
     gameCanvas.setAttribute("width", BOARD_WIDTH)
     gameCanvas.setAttribute("height", BOARD_HEIGHT)
-    // Make the displayed size equal to the drawing buffer so the canvas isn't scaled by CSS
-    // gameCanvas.style.width = BOARD_WIDTH + 'px';
-    // gameCanvas.style.height = BOARD_HEIGHT + 'px';
+
 
     var gameContext = gameCanvas.getContext("2d");
     addHorizontalGameLines(gameContext);
@@ -23,10 +21,7 @@ export function drawGame(game) {
     var gameCanvas=document.getElementById("game-grid");
     gameCanvas.setAttribute("width", BOARD_WIDTH)
     gameCanvas.setAttribute("height", BOARD_HEIGHT)
-    // Ensure displayed size matches internal resolution to keep tile pixels consistent
-    // gameCanvas.style.width = BOARD_WIDTH + 'px';
-    // gameCanvas.style.height = BOARD_HEIGHT + 'px';
-
+    
     var gameContext = gameCanvas.getContext("2d");
     gameContext.clearRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
     addHorizontalGameLines(gameContext);
