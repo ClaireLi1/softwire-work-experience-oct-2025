@@ -145,7 +145,9 @@ export function drawHeldPiece(game) {
     // Iterate over the tiles and draw the pieces
     for (let y = 0; y < tiles.length; y++) {
         for (let x = 0; x < tiles[y].length; x++) {
-            if (tiles[y][x] === 1) { // If this position has part of the tetromino
+            // If this position has part of the tetromino
+            // y-axis is flipped for display
+            if (tiles[tiles.length-1-y][x] === 1) { 
                 gameContext.fillRect(
                     offsetX + x * BOARD_UNIT_PIXEL_SIZE,
                     offsetY + y * BOARD_UNIT_PIXEL_SIZE,

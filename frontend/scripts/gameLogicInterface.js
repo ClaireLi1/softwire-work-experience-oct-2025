@@ -10,7 +10,8 @@ export const Tetromino = {
 	T_Piece: "T_Piece",
 };
 
-const TetrominoShapes = {
+// Shapes of the tetrominoes, with Y axis flipped so the in-memory representation matches playfield numbering where 0,0 is bottom-left
+const TetrominoShapes = flipYAxis({
 	I_Piece: [
 		[0, 0, 1, 0],
 		[0, 0, 1, 0],
@@ -46,7 +47,16 @@ const TetrominoShapes = {
 		[1, 1, 1],
 		[0, 1, 0]
 	]
-};
+});
+
+function flipYAxis(tetrominoShapes) {
+	const flippedTetrominoes = {};
+	for (const [key, shape] of Object.entries(tetrominoShapes)) {
+		const flippedShape = shape.slice().reverse();
+		flippedTetrominoes[key] = flippedShape;
+	}
+	return flippedTetrominoes;
+}
 
 /* separate library of tetros in preview (2x4 max) */
 export const previewTetros = {
@@ -381,7 +391,6 @@ export default function createGame(initialGameState = emptyGameState) {
 				lockCollision(playfield,activeTetromino)
 				this.getUpcomingTetrominoes();
 			}
-
 		},
 
 		/**
