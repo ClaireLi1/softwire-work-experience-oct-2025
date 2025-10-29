@@ -98,6 +98,50 @@ function rotateArray(tiles, direction) {
 	return newArray;
 }
 
+function checkCollision(playfield,activeTetromino) {
+	const tiles = activeTetromino.tiles
+	const position = activeTetromino.position
+	for (let r = 0; r<4; r++) {
+		for (let c = 0; c < 4;c++) {
+			if(tiles[r][c] === 0) {
+				continue;				
+			}
+			const xValue = c + position.x
+			const yValue = (r + position.y) - 1
+			
+			if (playfield[yValue][xValue]) {
+				return true
+			}
+
+			if (yValue < 0){
+				return true
+			}
+
+		}
+	}
+	return false
+}
+
+function lockCollision(playfield, activeTetromino) {
+    const colour = activeTetromino.colour;
+    const tiles = activeTetromino.tiles;
+    const position = activeTetromino.position;
+
+    for (let r = 0; r < 4; r++) {
+        for (let c = 0; c < 4; c++) {
+            if (tiles[r][c] === 1) {
+                const xValue = c + position.x;
+                const yValue = r + position.y;
+
+                if (yValue >= 0 && yValue < BOARD_UNITS_HEIGHT && xValue >= 0 && xValue < BOARD_UNITS_WIDTH) {
+                    playfield[yValue][xValue] = colour;
+                }
+            }
+        }
+    }
+}
+
+
 export const emptyGameState = {
 	// A 10x20 array full of null values
 	playfield: new Array(BOARD_UNITS_HEIGHT).fill(null).map(() => new Array(BOARD_UNITS_WIDTH).fill(null)),
@@ -131,9 +175,21 @@ export default function createGame(initialGameState = emptyGameState) {
 		 */
 		gameTick: function () {
 			// 1: Move currently active piece down
-			this.gameState.activeTetromino.position.y -= 1;
-
+			
 			// 2: Lock piece in place if it can't move down anymore
+			const playfield = this.gameState.playfield
+			const activeTetromino = this.gameState.activeTetromino
+
+
+			const collideValue = checkCollision(playfield,activeTetromino)
+
+			if (!collideValue) {
+				this.gameState.activeTetromino.position.y -= 1;
+			} else {
+				lockCollision(playfield,activeTetromino)
+			}
+
+
 
 
 			// 3: Clear any full lines
