@@ -134,7 +134,34 @@ export default function createGame(initialGameState = emptyGameState) {
 			this.gameState.activeTetromino.position.y -= 1;
 
 			// 2: Lock piece in place if it can't move down anymore
+			// function checkCollision(tetromino) {
+			// 	const tiles = tetromino.tiles;
+			// 	const position = tetromino.position;
 
+			// 	for(let row = 0;row < 4; row++) {
+			// 		for(let col = 0; col < 4 ; col++) {
+
+			// 		}
+			// 	}
+			// }
+			// 	const tiles
+			// }
+			//if (this.gameState.activeTetromino.position.y <= -1 && this.gameState.activeTetromino.colour != "") { 
+			//	xValue = ((this.gameState.activeTetromino.heldTetromino == true).position.x) 
+			//	yValue = ((this.gameState.activeTetromino.heldTetromino == true).position.y) 
+			//}
+			function checkCollision(playfield,activeTetromino) {
+				const tiles=activeTetromino.tiles
+				for (let r=0; r<4 r++) {
+					for (let c=0; c<4;c++) {
+						if(tiles[r][c]===0) {
+							console.log("bfasbk")
+							
+						}
+						//[c+p.position.x]=p.colour
+					}
+				}
+			}
 
 			// 3: Clear any full lines
 
