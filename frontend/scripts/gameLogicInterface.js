@@ -265,22 +265,22 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * @return {Array<Tetromino>}
 		 */
 
-getUpcomingTetrominoes: function () {
-	const state = this.gameState;
-	const nextName = state.upcomingTetrominoes.shift();
+		getUpcomingTetrominoes: function () {
+			const state = this.gameState;
+			const nextTetromino = state.upcomingTetrominoes.shift();
 
-	state.upcomingTetrominoes.push(getRandomTetromino());
+			state.upcomingTetrominoes.push(getRandomTetromino());
 
-	state.activeTetromino = {
-		name: nextName,
-		tiles: TetrominoShapes[nextName],
-		colour: getTetrominoColor(nextName),
-		position: {
-			x: (BOARD_UNITS_WIDTH - 4) / 2,
-			y: BOARD_UNITS_HEIGHT - 1,
+			state.activeTetromino = {
+				name: nextTetromino,
+				tiles: TetrominoShapes[nextTetromino],
+				colour: getTetrominoColor(nextTetromino),
+				position: {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1,
+				},
+			};
 		},
-	};
-},
 
 
 
