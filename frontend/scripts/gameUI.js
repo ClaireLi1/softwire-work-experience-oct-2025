@@ -19,9 +19,6 @@ export function drawGrid(){
     gameContext.stroke();
 }
 
-/* 
-* add absolute widths and heights to previewtetros dict to help w centering 
-* add conditions to function for centering with odd width/height blocks */
 function drawPreviewTetromino(tetro, offset) {
     var canvas = document.getElementById("upcoming-pieces-container");
     var ctx = canvas.getContext("2d");
