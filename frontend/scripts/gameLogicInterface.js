@@ -104,6 +104,8 @@ export const emptyGameState = {
 	score: 0,
 	upcomingTetrominoes: Array.from({ length: 3 }, getRandomTetromino),
 	heldTetromino: null,
+	// Whether hold has been used for the currently active piece
+	holdUsed: false,
 	activeTetromino: {
 		...(function () {
 			const tetromino = getRandomTetromino();
@@ -292,23 +294,26 @@ export default function createGame(initialGameState = emptyGameState) {
 			const activeName = state.activeTetromino.name;
 
 			// If there is a held tetromino already, swap them
-			if (state.heldTetromino) {
+			if (state.heldTetromino && !state.holdUsed) {
 				const previouslyHeld = state.heldTetromino;
 				// Put active into held
 				state.heldTetromino = activeName;
 
-				const activePosition = {
-					x: state.activeTetromino.position.x,
-					y: state.activeTetromino.position.y
+				// When swapping a held piece into active, spawn it at the normal spawn position
+				const spawnPosition = {
+					x: (BOARD_UNITS_WIDTH - 4) / 2,
+					y: BOARD_UNITS_HEIGHT - 1
 				};
 
-				// Make previously held the new active tetromino
+				// Make previously held the new active tetromino at spawn
 				state.activeTetromino = {
 					name: previouslyHeld,
 					tiles: TetrominoShapes[previouslyHeld].map(row => row.slice()),
 					colour: getTetrominoColor(previouslyHeld),
-					position: activePosition
+					position: spawnPosition
 				};
+				// Mark hold as used for this turn
+				
 			} else {
 				// No held piece: move active to held and spawn next from upcoming list
 				state.heldTetromino = activeName;
@@ -327,6 +332,8 @@ export default function createGame(initialGameState = emptyGameState) {
 						y: BOARD_UNITS_HEIGHT - 1,
 					}
 				};
+				// Mark hold as used for this turn
+				
 			}
 
 			// Call this to redraw the held piece
@@ -379,6 +386,7 @@ export default function createGame(initialGameState = emptyGameState) {
 					y: BOARD_UNITS_HEIGHT - 1,
 				}
 			};
+			this.gameState.holdUsed = false;
 		},
 
 		spawnO_Piece: function () {
