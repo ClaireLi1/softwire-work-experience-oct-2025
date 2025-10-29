@@ -110,16 +110,39 @@ function checkCollision(playfield,activeTetromino) {
 			const yValue=(r+position.y)-1
 			
 			if (playfield[yValue]) {
-				return false
+				if (playfield[yValue][xValue]) {
+					return true
+				}
 			}
 
 			if (yValue <1){
 				return true
 			}
 
+			if (playfield[yValue][xValue]) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+function lockCollision(playfield,activeTetromino) {
+	const colour=activeTetromino.colour
+	const tiles=activeTetromino.tiles
+	const position=activeTetromino.position
+
+	if (checkCollision(initialGameState.playfield,initialGameState.activeTetromino)) {
+		for (let r=0; r<4; r++) {
+			for (let c=0; c<4;c++) {
+				if(tiles[r][c]===0) {
+					continue;
+				}
+			}
 		}
 	}
 }
+
 
 export const emptyGameState = {
 	// A 10x20 array full of null values
