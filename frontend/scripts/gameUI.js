@@ -55,6 +55,10 @@ function drawPreviewTetromino(tetro, offset) {
 }
 
 export function drawUpcomingTetrominoes(game) {
+    var canvas = document.getElementById("upcoming-pieces-container");
+    var ctx = canvas.getContext("2d");
+    ctx.clearRect(0,0, canvas.width, canvas.height)
+
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[0], 0)
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[1], 120)
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[2], 240)
