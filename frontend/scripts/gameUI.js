@@ -25,16 +25,32 @@ export function drawGrid(){
 function drawPreviewTetromino(tetro, offset) {
     var canvas = document.getElementById("upcoming-pieces-container");
     var ctx = canvas.getContext("2d");
-    let mat = previewTetros[tetro]
+    let mat = []
+    let pieceHeight = 0
+    let pieceWidth = 0
+    if (tetro === "I_Piece") {
+        mat = previewTetros[tetro].slice(0,1)
+        pieceHeight = previewTetros[tetro][1][0]
+        pieceWidth = previewTetros[tetro][1][1]
+        offset = offset + 20
+    } else {
+        mat = previewTetros[tetro].slice(0,2)
+        pieceHeight = previewTetros[tetro][2][0]
+        pieceWidth = previewTetros[tetro][2][1]
+    }
+
+    console.log("this is piece " + tetro)
 
     ctx.fillStyle = getTetrominoColor(tetro)
     ctx.strokeStyle = "black"
     ctx.lineWidth = 3
-    for (let i = 0; i < 2; i++) {
-        for (let j = 0; j < 4; j++) {
+
+    let contWidth = 303.33
+    for (let i = 0; i < pieceHeight; i++) {
+        for (let j = 0; j < pieceWidth; j++) {
             if (mat[i][j] == 1) {
-                ctx.fillRect(72.67 +40*j,(40 + 40*i + offset), 40, 40)
-                ctx.strokeRect(72.67 +40*j,(40 + 40*i + offset), 40, 40)
+                ctx.fillRect(((contWidth-40*pieceWidth)/2)+40*j,(40 + 40*i + offset), 40, 40)
+                ctx.strokeRect(((contWidth-40*pieceWidth)/2)+40*j,(40 + 40*i + offset), 40, 40)
             } else {
             }
         }
