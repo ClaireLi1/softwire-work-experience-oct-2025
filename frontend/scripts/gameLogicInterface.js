@@ -334,7 +334,20 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Move the current tetromino down and increase fall speed
 		 */
 		moveDown: function() {
-			this.gameState.activeTetromino.position.y -= 1;
+
+			const playfield = this.gameState.playfield
+			const activeTetromino = this.gameState.activeTetromino
+			const upcomingTetromino = this.gameState.upcomingTetrominoes
+
+			const collideValue = checkCollision(playfield,activeTetromino)
+
+			if (!collideValue) {
+				this.gameState.activeTetromino.position.y -= 1;
+			} else {
+				lockCollision(playfield,activeTetromino)
+				this.getUpcomingTetrominoes();
+			}
+
 		},
 
 		/**
