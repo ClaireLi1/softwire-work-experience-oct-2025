@@ -7,18 +7,45 @@ const BOARD_UNIT_PIXEL_SIZE = 40;
 const BOARD_WIDTH = BOARD_UNITS_WIDTH * BOARD_UNIT_PIXEL_SIZE;
 const BOARD_HEIGHT = BOARD_UNITS_HEIGHT * BOARD_UNIT_PIXEL_SIZE;
 
+// Draws the grid lines for the main game board
 export function drawGrid(){
     var gameCanvas=document.getElementById("game-grid");
     gameCanvas.setAttribute("width", BOARD_WIDTH)
     gameCanvas.setAttribute("height", BOARD_HEIGHT)
-
-
+    
     var gameContext = gameCanvas.getContext("2d");
+    gameContext.clearRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
     addHorizontalGameLines(gameContext);
     addVerticalGameLines(gameContext);
     gameContext.stroke();
 }
 
+// Draws the main game board
+export function drawGame(game) {
+    drawGrid();
+    var gameCanvas = document.getElementById("game-grid");
+    var gameContext = gameCanvas.getContext("2d");
+
+    for (var y=0; y<BOARD_UNITS_HEIGHT; y++) {
+        for (var x=0; x<BOARD_UNITS_WIDTH; x++) {
+            const tileColour = game.getTileAtPosition(x, y);
+            if (tileColour !== null && tileColour !== undefined) {
+                gameContext.fillStyle = tileColour;
+                gameContext.fillRect(
+                    x * BOARD_UNIT_PIXEL_SIZE,
+                    (BOARD_UNITS_HEIGHT - y - 1) * BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE
+                );
+            }
+        }
+    }
+
+    // Also update held-piece display whenever the main board is drawn
+    try { drawHeldPiece(game); } catch (e) { /* ignore if UI not present */ }
+}
+
+// Draws a single preview tetromino at a given offset
 function drawPreviewTetromino(tetro, offset) {
     var canvas = document.getElementById("upcoming-pieces-container");
     var ctx = canvas.getContext("2d");
@@ -54,6 +81,7 @@ function drawPreviewTetromino(tetro, offset) {
     }
 }
 
+// Draws the upcoming tetrominoes in the side panel
 export function drawUpcomingTetrominoes(game) {
     var canvas = document.getElementById("upcoming-pieces-container");
     var ctx = canvas.getContext("2d");
@@ -63,36 +91,6 @@ export function drawUpcomingTetrominoes(game) {
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[1], 120)
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[2], 240)
     console.log(game.gameState.upcomingTetrominoes)
-}
-
-export function drawGame(game) {
-    var gameCanvas=document.getElementById("game-grid");
-    gameCanvas.setAttribute("width", BOARD_WIDTH)
-    gameCanvas.setAttribute("height", BOARD_HEIGHT)
-    
-    var gameContext = gameCanvas.getContext("2d");
-    gameContext.clearRect(0, 0, BOARD_WIDTH, BOARD_HEIGHT);
-    addHorizontalGameLines(gameContext);
-    addVerticalGameLines(gameContext);
-    gameContext.stroke();
-
-    for (var y=0; y<BOARD_UNITS_HEIGHT; y++) {
-        for (var x=0; x<BOARD_UNITS_WIDTH; x++) {
-            const tileColour = game.getTileAtPosition(x, y);
-            if (tileColour !== null && tileColour !== undefined) {
-                gameContext.fillStyle = tileColour;
-                gameContext.fillRect(
-                    x * BOARD_UNIT_PIXEL_SIZE,
-                    (BOARD_UNITS_HEIGHT - y - 1) * BOARD_UNIT_PIXEL_SIZE,
-                    BOARD_UNIT_PIXEL_SIZE,
-                    BOARD_UNIT_PIXEL_SIZE
-                );
-            }
-        }
-    }
-
-    // Also update held-piece display whenever the main board is drawn
-    try { drawHeldPiece(game); } catch (e) { /* ignore if UI not present */ }
 }
 
 function addVerticalGameLines(gameContext) {

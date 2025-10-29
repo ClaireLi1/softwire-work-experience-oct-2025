@@ -18,40 +18,33 @@ const TetrominoShapes = {
 		[0, 0, 1, 0]
 	],
 	J_Piece: [
-		[0, 0, 1, 0],
-		[0, 0, 1, 0],
-		[0, 1, 1, 0],
-		[0, 0, 0, 0]
+		[0, 1, 0],
+		[0, 1, 0],
+		[1, 1, 0]
 	],
 	L_Piece: [
-		[0, 1, 0, 0],
-		[0, 1, 0, 0],
-		[0, 1, 1, 0],
-		[0, 0, 0, 0]
+		[0, 1, 0],
+		[0, 1, 0],
+		[0, 1, 1]
 	],
 	O_Piece: [
-		[0, 0, 0, 0],
-		[0, 1, 1, 0],
-		[0, 1, 1, 0],
-		[0, 0, 0, 0]
+		[1, 1],
+		[1, 1]
 	],
 	S_Piece: [
-		[0, 0, 0, 0],
-		[0, 0, 1, 1],
-		[0, 1, 1, 0],
-		[0, 0, 0, 0]
+		[0, 0, 0],
+		[0, 1, 1],
+		[1, 1, 0],
 	],
 	Z_Piece: [
-		[0, 0, 0, 0],
-		[1, 1, 0, 0],
-		[0, 1, 1, 0],
-		[0, 0, 0, 0]
+		[0, 0, 0],
+		[1, 1, 0],
+		[0, 1, 1],
 	],
 	T_Piece: [
-		[0, 0, 0, 0],
-		[0, 1, 1, 1],
-		[0, 0, 1, 0],
-		[0, 0, 0, 0]
+		[0, 0, 0],
+		[1, 1, 1],
+		[0, 1, 0]
 	]
 };
 
@@ -113,22 +106,20 @@ function getRandomTetromino() {
 
 /* transpose function */
 function rotateArray(tiles, direction) {
-	var newArray = [[0, 0, 0, 0],
-	[0, 0, 0, 0],
-	[0, 0, 0, 0],
-	[0, 0, 0, 0]];
+	const len = tiles.length;
+	let newArray = new Array(len).fill(0).map(() => new Array(len).fill(0));
 
 	if (direction === "cw") {
-		for (let i = 0; i < 4; i++) {
-			for (let j = 0; j < 4; j++) {
-				newArray[i][j] = tiles[j][3 - i]
+		for (let i = 0; i < len; i++) {
+			for (let j = 0; j < len; j++) {
+				newArray[i][j] = tiles[j][len-1 - i];
 			}
 		}
 	}
 	else {
-		for (let i = 0; i < 4; i++) {
-			for (let j = 0; j < 4; j++) {
-				newArray[j][3 - i] = tiles[i][j]
+		for (let i = 0; i < len; i++) {
+			for (let j = 0; j < len; j++) {
+				newArray[j][len-1 - i] = tiles[i][j];
 			}
 		}
 	}
@@ -136,16 +127,19 @@ function rotateArray(tiles, direction) {
 	return newArray;
 }
 
-function checkCollision(playfield,activeTetromino) {
-	const tiles = activeTetromino.tiles
-	const position = activeTetromino.position
-	for (let r = 0; r<4; r++) {
-		for (let c = 0; c < 4;c++) {
+function checkCollision(playfield, activeTetromino) {
+	const tiles = activeTetromino.tiles;
+	const position = activeTetromino.position;
+	const len = tiles.length;
+
+	for (let r = 0; r < len; r++) {
+		for (let c = 0; c < len; c++) {
 			if(tiles[r][c] === 0) {
 				continue;				
 			}
 			const xValue = c + position.x
 			const yValue = (r + position.y) - 1
+			// const yValue = (len - 1 - r + position.y) - 1
 			
 			if (playfield[yValue]) {
 				if (playfield[yValue][xValue]) {
@@ -166,12 +160,14 @@ function lockCollision(playfield, activeTetromino) {
     const colour = activeTetromino.colour;
     const tiles = activeTetromino.tiles;
     const position = activeTetromino.position;
+	const len = tiles.length;
 
-    for (let r = 0; r < 4; r++) {
-        for (let c = 0; c < 4; c++) {
+    for (let r = 0; r < len; r++) {
+        for (let c = 0; c < len; c++) {
             if (tiles[r][c] === 1) {
                 const xValue = c + position.x;
-                const yValue = r + position.y;
+                // const yValue = len - 1 - r + position.y;
+				const yValue = r + position.y;
 
                 if (yValue >= 0 && yValue < BOARD_UNITS_HEIGHT && xValue >= 0 && xValue < BOARD_UNITS_WIDTH) {
                     playfield[yValue][xValue] = colour;
@@ -218,7 +214,6 @@ export default function createGame(initialGameState = emptyGameState) {
 			// 2: Lock piece in place if it can't move down anymore
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
-			const upcomingTetromino = this.gameState.upcomingTetrominoes
 
 			const collideValue = checkCollision(playfield,activeTetromino)
 
@@ -263,7 +258,9 @@ export default function createGame(initialGameState = emptyGameState) {
 
 			// Check active tetromino first
 			const relativeX = posX - position.x;
+			// const relativeY = position.y - posY + tiles.length - 1;
 			const relativeY = posY - position.y;
+
 			if (
 				relativeX >= 0 &&
 				relativeX < tiles[0].length &&
