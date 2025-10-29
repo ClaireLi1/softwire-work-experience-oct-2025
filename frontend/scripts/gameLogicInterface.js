@@ -12,60 +12,60 @@ export const Tetromino = {
 
 const TetrominoShapes = {
 	I_Piece: [
-        [0,0,1,0],
-        [0,0,1,0],
-        [0,0,1,0],
-        [0,0,1,0]
+		[0, 0, 1, 0],
+		[0, 0, 1, 0],
+		[0, 0, 1, 0],
+		[0, 0, 1, 0]
 	],
 	J_Piece: [
-        [0,0,1,0],
-        [0,0,1,0],
-        [0,1,1,0],
-        [0,0,0,0]
+		[0, 0, 1, 0],
+		[0, 0, 1, 0],
+		[0, 1, 1, 0],
+		[0, 0, 0, 0]
 	],
 	L_Piece: [
-       [0,1,0,0],
-       [0,1,0,0],
-       [0,1,1,0],
-       [0,0,0,0]
+		[0, 1, 0, 0],
+		[0, 1, 0, 0],
+		[0, 1, 1, 0],
+		[0, 0, 0, 0]
 	],
 	O_Piece: [
-		[0,0,0,0],
-		[0,1,1,0],
-		[0,1,1,0],
-		[0,0,0,0]
+		[0, 0, 0, 0],
+		[0, 1, 1, 0],
+		[0, 1, 1, 0],
+		[0, 0, 0, 0]
 	],
 	S_Piece: [
-        [0,0,0,0],
-        [0,0,1,1],
-        [0,1,1,0],
-        [0,0,0,0]
+		[0, 0, 0, 0],
+		[0, 0, 1, 1],
+		[0, 1, 1, 0],
+		[0, 0, 0, 0]
 	],
 	Z_Piece: [
-        [0,0,0,0],
-        [1,1,0,0],
-        [0,1,1,0],
-        [0,0,0,0]
+		[0, 0, 0, 0],
+		[1, 1, 0, 0],
+		[0, 1, 1, 0],
+		[0, 0, 0, 0]
 	],
 	T_Piece: [
-        [0,0,0,0],
-        [0,1,1,1],
-        [0,0,1,0],
-        [0,0,0,0]
+		[0, 0, 0, 0],
+		[0, 1, 1, 1],
+		[0, 0, 1, 0],
+		[0, 0, 0, 0]
 	]
 };
 
 function getTetrominoColor(piece) {
-    const colorMap = {
-        "I_Piece": "cyan",
-        "J_Piece": "blue",
-        "L_Piece": "orange",
-        "O_Piece": "yellow",
-        "S_Piece": "green",
-        "T_Piece": "purple",
-        "Z_Piece": "red"
-    };
-    return colorMap[piece];
+	const colorMap = {
+		"I_Piece": "cyan",
+		"J_Piece": "blue",
+		"L_Piece": "orange",
+		"O_Piece": "yellow",
+		"S_Piece": "green",
+		"T_Piece": "purple",
+		"Z_Piece": "red"
+	};
+	return colorMap[piece];
 }
 
 function getRandomTetromino() {
@@ -102,10 +102,10 @@ export const emptyGameState = {
 	// A 10x20 array full of null values
 	playfield: new Array(BOARD_UNITS_HEIGHT).fill(null).map(() => new Array(BOARD_UNITS_WIDTH).fill(null)),
 	score: 0,
-	upcomingTetrominoes: Array.from({length: 3}, getRandomTetromino),
+	upcomingTetrominoes: Array.from({ length: 3 }, getRandomTetromino),
 	heldTetromino: null,
 	activeTetromino: {
-		...(function() {
+		...(function () {
 			const tetromino = getRandomTetromino();
 			return {
 				name: tetromino,
@@ -129,7 +129,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		/**
 		 * Progress the game forward one timestep
 		 */
-		gameTick: function() {
+		gameTick: function () {
 			// 1: Move currently active piece down
 			this.gameState.activeTetromino.position.y -= 1;
 			
@@ -137,11 +137,11 @@ export default function createGame(initialGameState = emptyGameState) {
 
 
 			// 3: Clear any full lines
-			
-			
+
+
 			// 4: Increase score
-			
-			
+
+
 			// 5: Get new piece from upcoming tetrominoes
 
 
@@ -151,7 +151,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Return if the game is over
 		 * @return {boolean}
 		 */
-		isGameOver: function() {
+		isGameOver: function () {
 
 		},
 
@@ -197,7 +197,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 *
 		 * Which stats to keep track of can be determined later
 		 */
-		getStats: function() {
+		getStats: function () {
 
 		},
 
@@ -222,7 +222,7 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * This combines every one of the above functions (for debug purposes)
 		 * @return {object}
 		 */
-		getGameState: function() {
+		getGameState: function () {
 			return this.gameState;
 		},
 
@@ -257,15 +257,61 @@ export default function createGame(initialGameState = emptyGameState) {
 		/**
 		 * Instantly drop the current tetromino as far as it goes and lock it in place
 		 */
-		instantDropTetromino: function() {
+		instantDropTetromino: function () {
 
 		},
 
 		/**
 		 * Hold the current tetromino, swapping it for any currently held one
 		 */
-		holdCurrentTetromino: function() {
+		holdCurrentTetromino: function () {
+			const state = this.gameState;
+			
+			// Name of the currently active tetromino
+			const activeName = state.activeTetromino.name;
 
+
+
+			// If there is a held tetromino already, swap them
+			if (state.heldTetromino) {
+				const previouslyHeld = state.heldTetromino;
+				// Put active into held
+				state.heldTetromino = activeName;
+
+				const activePosition = {
+					x: state.activeTetromino.position.x,
+					y: state.activeTetromino.position.y
+				};
+
+				// Make previously held the new active tetromino
+				state.activeTetromino = {
+					name: previouslyHeld,
+					tiles: TetrominoShapes[previouslyHeld].map(row => row.slice()),
+					colour: getTetrominoColor(previouslyHeld),
+					position: activePosition
+
+					
+				};
+			} else {
+				// No held piece: move active to held and spawn next from upcoming list
+				state.heldTetromino = activeName;
+
+				// Pull next tetromino from upcoming; if none, use the first one
+				const nextName = state.upcomingTetrominoes && state.upcomingTetrominoes.length > 0
+					? state.upcomingTetrominoes.shift()
+					: state.upcomingTetrominoes[0];
+
+				state.activeTetromino = {
+					name: nextName,
+					tiles: TetrominoShapes[nextName].map(row => row.slice()),
+					colour: getTetrominoColor(nextName),
+					position: {
+						x: (BOARD_UNITS_WIDTH - 4) / 2,
+						y: BOARD_UNITS_HEIGHT - 1,
+					}
+				};
+			}
+			drawHeldPiece(this);
 		},
 
 		/**
@@ -361,8 +407,7 @@ export default function createGame(initialGameState = emptyGameState) {
 					y: BOARD_UNITS_HEIGHT - 1,
 				}
 			};
-		}
+		} 
 	};
-
 	return tetrisGame;
 };
