@@ -55,17 +55,49 @@ const TetrominoShapes = {
 	]
 };
 
-function getTetrominoColor(piece) {
-	const colorMap = {
-		"I_Piece": "cyan",
-		"J_Piece": "blue",
-		"L_Piece": "orange",
-		"O_Piece": "yellow",
-		"S_Piece": "green",
-		"T_Piece": "purple",
-		"Z_Piece": "red"
-	};
-	return colorMap[piece];
+/* separate library of tetros in preview (2x4 max) */
+export const previewTetros = {
+	I_Piece: [
+		[0,0,0,0],
+		[1,1,1,1]
+	],
+	L_Piece: [
+		[0,0,1,0],
+		[1,1,1,0]
+	],
+	J_Piece: [
+		[1,0,0,0],
+		[1,1,1,0]
+	],
+	O_Piece: [
+		[0,1,1,0],
+		[0,1,1,0]
+	],
+	S_Piece: [
+		[0,1,1,0],
+		[1,1,0,0]
+	],
+	Z_Piece: [
+		[1,1,0,0],
+		[0,1,1,0]
+	],
+	T_View: [
+		[1,1,1,0],
+		[0,1,0,0]
+	],
+}
+
+export function getTetrominoColor(piece) {
+    const colorMap = {
+        "I_Piece": "cyan",
+        "J_Piece": "blue",
+        "L_Piece": "orange",
+        "O_Piece": "yellow",
+        "S_Piece": "green",
+        "T_Piece": "purple",
+        "Z_Piece": "red"
+    };
+    return colorMap[piece];
 }
 
 function getRandomTetromino() {
@@ -166,12 +198,9 @@ export const emptyGameState = {
 	}
 };
 
-
-
 export default function createGame(initialGameState = emptyGameState) {
 	const tetrisGame = {
 		gameState: initialGameState,
-
 		/**
 		 * Progress the game forward one timestep
 		 */

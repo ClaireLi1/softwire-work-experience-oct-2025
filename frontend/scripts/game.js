@@ -1,5 +1,5 @@
 import createGame  from "./gameLogicInterface.js"
-import { drawGame, drawGrid } from "./gameUI.js"
+import { drawGame, drawGrid, drawUpcomingTetrominoes } from "./gameUI.js"
 
 const GAME_TICK_INTERVAL_MS = 1000;
 
@@ -17,6 +17,7 @@ function initialiseGame() {
     setInterval(() => {
         game.gameTick();
         drawGame(game);
+        drawUpcomingTetrominoes(game);
     }, GAME_TICK_INTERVAL_MS);
 
     return game;

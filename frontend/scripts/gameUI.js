@@ -1,3 +1,5 @@
+import { getTetrominoColor, previewTetros } from "./gameLogicInterface.js";
+
 export const BOARD_UNITS_WIDTH = 10;
 export const BOARD_UNITS_HEIGHT = 20;
 const BOARD_UNIT_PIXEL_SIZE = 40;
@@ -15,6 +17,28 @@ export function drawGrid(){
     addHorizontalGameLines(gameContext);
     addVerticalGameLines(gameContext);
     gameContext.stroke();
+}
+
+function drawPreviewTetromino(tetro, offset) {
+    var canvas = document.getElementById("upcoming-pieces-container");
+    var ctx = canvas.getContext("2d");
+    let mat = previewTetros[tetro]
+
+    ctx.fillStyle = getTetrominoColor(tetro)
+    for (let i = 0; i < 2; i++) {
+        for (let j = 0; j < 4; j++) {
+            if (mat[i][j] == 1) {
+                ctx.fillRect(80 +40*j,(40 + 40*i + offset), 40, 40)
+            } else {
+            }
+        }
+    }
+}
+
+export function drawUpcomingTetrominoes(game) {
+    drawPreviewTetromino(game.gameState.upcomingTetrominoes[0], 0)
+    drawPreviewTetromino(game.gameState.upcomingTetrominoes[1], 120)
+    drawPreviewTetromino(game.gameState.upcomingTetrominoes[2], 240)
 }
 
 export function drawGame(game) {
