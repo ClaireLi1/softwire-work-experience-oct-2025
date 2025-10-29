@@ -255,6 +255,13 @@ export default function createGame(initialGameState = emptyGameState) {
 		},
 
 		/**
+		 * Move the current tetromino down and increase fall speed
+		 */
+		moveDown: function() {
+			this.gameState.activeTetromino.position.y -= 1;
+		},
+
+		/**
 		 * Rotate the current tetromino clockwise 90 degrees
 		 */
 		rotateTetrominoClockwise: function () { /* tranpose */

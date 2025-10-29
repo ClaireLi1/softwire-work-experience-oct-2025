@@ -39,7 +39,9 @@ function setupControls() {
                 drawGame(game);
                 break;
             case 'ArrowDown':
-                // TODO: implement soft drop
+                game.moveDown();
+                drawGame(game);
+                break;
                 
             case ' ': // Space
                 game.instantDropTetromino();
