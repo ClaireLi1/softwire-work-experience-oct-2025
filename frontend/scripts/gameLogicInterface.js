@@ -99,8 +99,8 @@ function rotateArray(tiles, direction) {
 }
 
 function checkCollision(playfield,activeTetromino) {
-	const tiles=activeTetromino.tiles
-	const position=activeTetromino.position
+	const tiles = activeTetromino.tiles
+	const position = activeTetromino.position
 	for (let r = 0; r<4; r++) {
 		for (let c = 0; c < 4;c++) {
 			if(tiles[r][c] === 0) {
@@ -181,7 +181,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			const activeTetromino = this.gameState.activeTetromino
 
 
-			const collideValue=checkCollision(playfield,activeTetromino)
+			const collideValue = checkCollision(playfield,activeTetromino)
 
 			if (!collideValue) {
 				this.gameState.activeTetromino.position.y -= 1;
