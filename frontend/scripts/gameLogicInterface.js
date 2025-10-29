@@ -181,7 +181,7 @@ export default function createGame(initialGameState = emptyGameState) {
 			// 2: Lock piece in place if it can't move down anymore
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
-
+			const upcomingTetromino = this.gameState.upcomingTetrominoes
 
 			const collideValue = checkCollision(playfield,activeTetromino)
 
@@ -189,6 +189,7 @@ export default function createGame(initialGameState = emptyGameState) {
 				this.gameState.activeTetromino.position.y -= 1;
 			} else {
 				lockCollision(playfield,activeTetromino)
+				getUpcomingTetrominoes(activeTetromino,upcomingTetromino)
 			}
 
 
@@ -263,11 +264,16 @@ export default function createGame(initialGameState = emptyGameState) {
 		 * Get any upcoming tetrominoes
 		 * @return {Array<Tetromino>}
 		 */
-		getUpcomingTetrominoes: function () {
-			return this.gameState.upcomingTetrominoes;
+		getUpcomingTetrominoes: function (activeTetromino,upcomingTetromino) {
+			//return this.gameState.upcomingTetrominoes;
+			if (activeTetromino) {
+				activeTetromino = upcomingTetromino
+			}
 		},
 
+
 		/**
+		 * 
 		 * Return the tetromino currently being held, if any
 		 * @return {null | Tetromino}
 		 */
