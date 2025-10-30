@@ -320,6 +320,8 @@ export function createGame(initialGameState = emptyGameState) {
 			state.upcomingTetrominoes.push(getRandomTetromino());
 
 			state.activeTetromino = newActiveTetromino(nextTetromino);
+			// Reset hold availability when a new piece becomes active
+			state.holdUsed = false;
 		},
 
 
@@ -415,20 +417,20 @@ export function createGame(initialGameState = emptyGameState) {
 		 */
 		holdCurrentTetromino: function () {
 			const state = this.gameState;
+			// Only allow hold once per active piece
+			if (state.holdUsed) return;
 
 			// Name of the currently active tetromino
-			const activeName = state.activeTetromino.name;
+			const activeName = state.activeTetromino && state.activeTetromino.name;
+			if (!activeName) return;
 
-			// If there is a held tetromino already, swap them
-			if (state.heldTetromino && !state.holdUsed) {
+			if (state.heldTetromino) {
 				const previouslyHeld = state.heldTetromino;
 				// Put active into held
 				state.heldTetromino = activeName;
 
 				// Make previously held the new active tetromino at spawn
 				state.activeTetromino = newActiveTetromino(previouslyHeld);
-				// Mark hold as used for this turn
-				
 			} else {
 				// No held piece: move active to held and spawn next from upcoming list
 				state.heldTetromino = activeName;
@@ -439,9 +441,10 @@ export function createGame(initialGameState = emptyGameState) {
 					: state.upcomingTetrominoes[0];
 
 				state.activeTetromino = newActiveTetromino(nextName);
-				// Mark hold as used for this turn
-				
 			}
+
+			// mark hold used for this active piece
+			state.holdUsed = true;
 
 			// Call this to redraw the held piece
 			// UI is responsible for redrawing; do not call into UI from game logic (avoids circular imports)
