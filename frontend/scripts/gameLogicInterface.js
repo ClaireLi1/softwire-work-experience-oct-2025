@@ -204,12 +204,30 @@ function lockCollision(playfield, activeTetromino) {
     }
 }
 
+/* add workaround for clearing non adjacent lines */
 function moveGridDown(playfield, yValue) {
 	for (let y = yValue; y<BOARD_UNITS_HEIGHT-1;y++) {
 		for (let x = 0; x < BOARD_UNITS_WIDTH; x++) {
 			playfield[y][x] = playfield[y+1][x]
 		}
 	}
+}
+
+
+function addToScore(score, numLines) {
+	if (numLines == 1) {
+		score += 40
+	}
+	else if (numLines == 2) {
+		score += 100
+	} else if (numLines == 3) {
+		score += 300
+	} else if (numLines == 4) {
+		score += 1200
+	}
+	console.log(score)
+	document.getElementById("score-container").innerText = "Score: " + score;
+	return score;
 }
 
 function clearFullLine(playfield, yValue) {
@@ -222,23 +240,32 @@ function clearFullLine(playfield, yValue) {
 }
 
 /* only check after piece has been locked in */
-function checkFullLines(playfield, yValue) {
+function checkFullLine(playfield, yValue) {
 	let full = true
-	for (let i=0; i < BOARD_UNITS_WIDTH; i++) {
-		if (playfield[yValue][i] == null) {
+	for (let col=0; col < BOARD_UNITS_WIDTH; col++) {
+		if (playfield[yValue][col] == null) {
 			full = false;
-			break
+			return false;
 		}
-	}
+	};
 	if (full) {
-		clearFullLine(playfield, yValue)
-	}
+		return true
+	};
 }
 
-function checkAllFullLines(playfield) {
-	for (let i = 0; i < BOARD_UNITS_HEIGHT; i++) {
-		checkFullLines(playfield, i)
-	}
+function checkAllFullLines(playfield, score) {
+	let numFullLines = 0;
+	let yVals = [];
+	for (let row = 0; row < BOARD_UNITS_HEIGHT; row++) {
+		if (checkFullLine(playfield, row)) {
+			yVals.push(row);
+			numFullLines++;
+		}
+	};
+	for (let i = 0; i < numFullLines; i++) {
+		clearFullLine(playfield, (yVals[i]-i));
+	};
+	return addToScore(score, numFullLines);
 }
 
 function OutOfBounds(playfield, activeTetromino, direction) {
@@ -302,6 +329,7 @@ export function createGame(initialGameState = emptyGameState) {
 			// 2: Lock piece in place if it can't move down anymore
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
+			// let score = this.gameState.score;
 
 			const collideValue = checkCollision(playfield, activeTetromino)
 
@@ -309,18 +337,16 @@ export function createGame(initialGameState = emptyGameState) {
 				this.gameState.activeTetromino.position.y -= 1;
 			} else {
 				lockCollision(playfield, activeTetromino)
+				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
 				this.getUpcomingTetrominoes();
 			}
 
 
-
-
 			// 3: Clear any full lines
 			/* check all lines are full */
-			checkAllFullLines(playfield)
+			
 
 			// 4: Increase score
-
 
 			// 5: Get new piece from upcoming tetrominoes
 
