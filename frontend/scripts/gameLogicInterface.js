@@ -125,10 +125,12 @@ function newActiveTetromino(tetroName) {
 }
 
 function getSpawnPosition(len) {
-	return {
+	let position = {
 		x: Math.floor((BOARD_UNITS_WIDTH - len) / 2),
-		y: BOARD_UNITS_HEIGHT - 1, // Top row is reserved for game over
-	}
+		y: (len === 2) ? BOARD_UNITS_HEIGHT - 1 : BOARD_UNITS_HEIGHT - 2, // Top row is reserved for game over
+	};
+
+	return position;
 }
 
 /* transpose function */

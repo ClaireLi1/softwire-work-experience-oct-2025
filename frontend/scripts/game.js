@@ -13,9 +13,9 @@ function initialiseGame() {
 
     // Start the game loop
     setInterval(() => {
-        game.gameTick();
         drawGame(game);
         drawUpcomingTetrominoes(game);
+        game.gameTick();
         
     }, GAME_TICK_INTERVAL_MS);
 
