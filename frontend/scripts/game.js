@@ -16,13 +16,9 @@ function initialiseGame() {
     game.start(() => {
         drawGame(game); // frontend redraws every tick
         drawUpcomingTetrominoes(game);
-    
     });
 
-    
     return game;
-    
-
 }
 
 
