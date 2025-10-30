@@ -154,5 +154,11 @@ export function drawHeldPiece(game) {
             }
         }
     }
+
+    // function deactivateHeldPieceDisplay() {
+    //     const gameCanvas = document.getElementById("held-piece-container"); 
+    //     gameCanvas.style.display = "none";
+   
+    
 }
 
