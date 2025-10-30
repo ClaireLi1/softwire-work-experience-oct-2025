@@ -322,6 +322,26 @@ function testBoundaryChange (playfield,tetromino) {
 	return false;
 }
 
+function ghostblock(playfield, activeTetromino) {
+    // Clone the active tetromino
+    const ghost = {
+        ...activeTetromino,
+        position: { ...activeTetromino.position }
+    };
+
+    // Drop it until collision
+    while (!checkCollision(playfield, ghost)) {
+        ghost.position.y -= 1; // or +=1 depending on your coordinate system
+    }
+
+    // Move back one step to the last valid position
+    ghost.position.y += 1;
+
+    return ghost;
+}
+
+
+
 export const emptyGameState = {
 	// A 10x20 array full of null values
 	playfield: new Array(BOARD_UNITS_HEIGHT).fill(null).map(() => new Array(BOARD_UNITS_WIDTH).fill(null)),
@@ -365,6 +385,13 @@ export function createGame(initialGameState = emptyGameState) {
 			// 4: Increase score
 
 
+		},
+
+		ghostblock: function() {
+			const playfield = this.gameState.playfield;
+			const activeTetromino = this.gameState.activeTetromino;
+
+			return getGhostPosition(playfield, activeTetromino);
 		},
 
 		/**
@@ -604,7 +631,6 @@ export function createGame(initialGameState = emptyGameState) {
 			state.holdUsed = true;
 	
 		},
-		
 	
 		/**
 		 * Debug controls, will be removed for release
