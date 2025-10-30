@@ -202,6 +202,8 @@ function lockCollision(playfield, activeTetromino) {
             }
         }
     }
+
+	
 }
 
 
@@ -435,10 +437,16 @@ export function createGame(initialGameState = emptyGameState) {
 				// No held piece: move active to held and spawn next from upcoming list
 				state.heldTetromino = activeName;
 
-				// Pull next tetromino from upcoming; if none, use the first one
-				const nextName = state.upcomingTetrominoes && state.upcomingTetrominoes.length > 0
-					? state.upcomingTetrominoes.shift()
-					: state.upcomingTetrominoes[0];
+				// Pull next tetromino from upcoming; if present remove it and replenish the queue
+				let nextName;
+				if (state.upcomingTetrominoes && state.upcomingTetrominoes.length > 0) {
+					nextName = state.upcomingTetrominoes.shift();
+					// Ensure the preview always shows three upcoming pieces by replenishing
+					state.upcomingTetrominoes.push(getRandomTetromino());
+				} else {
+					// Fallback: generate a random tetromino if the queue is unexpectedly empty
+					nextName = getRandomTetromino();
+				}
 
 				state.activeTetromino = newActiveTetromino(nextName);
 			}
@@ -446,8 +454,10 @@ export function createGame(initialGameState = emptyGameState) {
 			// mark hold used for this active piece
 			state.holdUsed = true;
 
-			// Call this to redraw the held piece
-			// UI is responsible for redrawing; do not call into UI from game logic (avoids circular imports)
+			
+
+			
+
 		},
 
 
