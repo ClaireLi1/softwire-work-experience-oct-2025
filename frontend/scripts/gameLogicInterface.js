@@ -290,17 +290,20 @@ function rotationCollision (playfield, activeTetromino, direction) {
 		tiles: rotatedTiles
   	};
 
-	if (testBoundaryChange(testTetromino)) {
+	const OutOfBounds = testBoundaryChange(playfield,testTetromino);
+	const collision = checkCollision(playfield,testTetromino);
+
+	if (!OutOfBounds && !collision) {
 		activeTetromino.tiles = rotatedTiles;
 		return false;
 	}
 	return true;
 }
 
-function testBoundaryChange (tetromino) {
+function testBoundaryChange (playfield,tetromino) {
 	const tiles = tetromino.tiles;
 	const position = tetromino.position;
-	const len = tetromino.length;
+	const len = tiles.length;
 	
 	for (let r = 0; r < len; r++) {
 		for (let c = 0; c < len; c++) {
@@ -524,10 +527,7 @@ export function createGame(initialGameState = emptyGameState) {
 			// this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "cw")
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
-			if (!rotationCollision (playfield, activeTetromino, "cw")) {
-				this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "cw")
-			}
-
+			rotationCollision (playfield, activeTetromino, "cw")
 		},
 
 		/**
@@ -538,9 +538,7 @@ export function createGame(initialGameState = emptyGameState) {
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
 
-			if (!rotationCollision (playfield, activeTetromino, "acw")) {
-				this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "acw")
-			}
+			rotationCollision(playfield, activeTetromino, "acw")
 		},
 
 		/**
