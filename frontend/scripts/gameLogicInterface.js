@@ -386,7 +386,12 @@ export function createGame(initialGameState = emptyGameState) {
 				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
 				const GameOver = this.isGameOver();
 				console.log("collision happens");
-				this.getUpcomingTetrominoes();
+				console.log(GameOver);
+				if (GameOver) {
+					display()
+				} else {
+					this.getUpcomingTetrominoes();
+				}
 			}
 
 			// 3: Clear any full lines

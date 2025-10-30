@@ -23,8 +23,23 @@ function initialiseGame() {
 
 function setupControls() {
     document.addEventListener('keydown', (event) => {
-        switch(event.key) {
-            
+        if (!isGameOver) { 
+            switch(event.key) {
+                
+            case ' ': // Space
+                game.instantDropTetromino();
+                drawGame(game);
+                break;
+            case 'c':
+            case 'C':
+                game.holdCurrentTetromino();
+                drawGame(game);
+                break;
+            case 'z':
+            case 'Z':
+                game.rotateTetrominoAntiClockwise();
+                drawGame(game);
+                break;
             case 'ArrowLeft':
                 game.moveLeft();
                 drawGame(game);
@@ -50,12 +65,12 @@ function setupControls() {
             case 'C':
                 game.holdCurrentTetromino();
                 drawGame(game);
-                break;
-            case 'z':
-            case 'Z':
-                game.rotateTetrominoAntiClockwise();
-                drawGame(game);
-                break;
+                    break;
+                // case 'z':
+                // case 'Z':
+                //     game.rotateTetrominoAntiClockwise();
+                //     drawGame(game);
+                //     break;
 
             /* Debug controls, will be removed for release */
             case 'i':
@@ -99,5 +114,6 @@ function setupControls() {
             
             /* End debug controls */
         }
+    }
     });
 }
