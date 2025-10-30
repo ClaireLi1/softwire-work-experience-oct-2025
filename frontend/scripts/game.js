@@ -11,8 +11,6 @@ function initialiseGame() {
     drawGrid();
     setupControls();
 
-    console.log(game);
-
     // Start the game loop
     setInterval(() => {
         game.gameTick();
