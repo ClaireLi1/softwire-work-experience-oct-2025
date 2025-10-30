@@ -46,6 +46,7 @@ export function drawGame(game) {
                     BOARD_UNIT_PIXEL_SIZE
                 );
             }
+        
         }
     }
 

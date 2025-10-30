@@ -1,7 +1,7 @@
-import { createGame, Tetromino } from "./gameLogicInterface.js"
+import { createGame, Tetromino, } from "./gameLogicInterface.js"
 import { drawGame, drawGrid, drawUpcomingTetrominoes } from "./gameUI.js"
 
-const GAME_TICK_INTERVAL_MS = 500;
+export var GAME_TICK_INTERVAL_MS = 500;
 
 let game = initialiseGame();
 
@@ -11,15 +11,16 @@ function initialiseGame() {
     drawGrid();
     setupControls();
 
-    // Start the game loop
-    setInterval(() => {
-        drawGame(game);
+    console.log(game);
+
+    game.start(() => {
+        drawGame(game); // frontend redraws every tick
         drawUpcomingTetrominoes(game);
-        game.gameTick();
-    }, GAME_TICK_INTERVAL_MS);
+    });
 
     return game;
 }
+
 
 function setupControls() {
     document.addEventListener('keydown', (event) => {
@@ -109,6 +110,14 @@ function setupControls() {
             //     game.spawnPiece(Tetromino.Z_Piece);
             //     drawGame(game);
             //     break;
+     
+            case 'q':
+            case 'Q':
+                game.increaseSpeedProgress(() => {drawGame(game);
+                drawUpcomingTetrominoes(game);
+                });
+                
+                break;
      
 
     
