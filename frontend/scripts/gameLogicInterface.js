@@ -206,6 +206,43 @@ function lockCollision(playfield, activeTetromino) {
 	
 }
 
+function OutOfBounds(playfield, activeTetromino, direction) {
+	const tiles = activeTetromino.tiles;
+    const position = activeTetromino.position;
+	const len = tiles.length;
+
+	for (let r = 0; r < len; r++) {
+		for (let c = 0; c < len; c++) {
+			if(tiles[r][c] === 0) {
+				continue;				
+			}
+
+			const xValue = c + position.x
+			const yValue = r + position.y
+
+			if (direction == "left") {
+				if (xValue - 1 < 0) {
+					return true
+				}
+				if (playfield[xValue]) {
+					if (playfield[yValue][xValue - 1]) {
+						return true
+					}
+				}
+			} else if (direction == "right") {
+				if (xValue + 1 >= BOARD_UNITS_WIDTH) {
+					return true
+				}
+				if (playfield[xValue]) {
+					if (playfield[yValue][xValue + 1]) {
+						return true
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
 
 export const emptyGameState = {
 	// A 10x20 array full of null values
@@ -364,14 +401,28 @@ export function createGame(initialGameState = emptyGameState) {
 		 * Move the current tetromino left 1 tile
 		 */
 		moveLeft: function () {
-			this.gameState.activeTetromino.position.x -= 1;
+			const playfield = this.gameState.playfield
+			const activeTetromino = this.gameState.activeTetromino
+
+			const boundary = OutOfBounds(playfield, activeTetromino, "left")
+
+			if (!boundary) {
+				this.gameState.activeTetromino.position.x -= 1;
+			}
 		},
 
 		/**
 		 * Move the current tetromino right 1 tile
 		 */
 		moveRight: function () {
-			this.gameState.activeTetromino.position.x += 1;
+			const playfield = this.gameState.playfield
+			const activeTetromino = this.gameState.activeTetromino
+
+			const boundary = OutOfBounds(playfield, activeTetromino, "right")
+
+			if (!boundary) {
+				this.gameState.activeTetromino.position.x += 1;
+			}
 		},
 
 		/**
