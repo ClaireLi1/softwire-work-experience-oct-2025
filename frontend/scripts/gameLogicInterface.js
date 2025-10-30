@@ -379,9 +379,13 @@ export function createGame(initialGameState = emptyGameState) {
 
 			if (!collideValue) {
 				this.gameState.activeTetromino.position.y -= 1;
+				console.log("doesn't collide");
 			} else {
-				lockCollision(playfield, activeTetromino)
+				lockCollision(playfield,activeTetromino)
 				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
+				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
+				const GameOver = this.isGameOver();
+				console.log("collision happens");
 				this.getUpcomingTetrominoes();
 			}
 
@@ -400,7 +404,32 @@ export function createGame(initialGameState = emptyGameState) {
 		 * @return {boolean}
 		 */
 		isGameOver: function () {
+			console.log("called isGameOver");
+			const playfield = this.gameState.playfield;
+			const activeTetromino = this.gameState.activeTetromino;
+			const tiles = activeTetromino.tiles;
+			const position = activeTetromino.position;
+			const len = tiles.length;
 
+			// Check if the tetromino at spawn position would collide
+			for (let r = 0; r < len; r++) {
+				for (let c = 0; c < len; c++) {
+					console.log("inside nested loop");
+					if (tiles[r][c] === 0) continue; // Skip empty tiles
+					const xValue = c + position.x;
+					const yValue = r + position.y; // Checking the topmost row
+					console.log("xValue: " + xValue);
+					console.log("yValue: " + yValue);
+
+					// Check if the position is outside the bounds or collides with an existing block
+					if (yValue >= BOARD_UNITS_HEIGHT || xValue < 0 || xValue >= BOARD_UNITS_WIDTH) {
+						console.log("condition is met")
+						return true; // Game over if there's a collision
+					}
+				}
+			}
+			console.log("finished loop")
+			return false; // No collision, game is not over yet
 		},
 
 		/**
