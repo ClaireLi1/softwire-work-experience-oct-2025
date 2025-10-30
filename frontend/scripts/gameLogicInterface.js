@@ -368,12 +368,6 @@ export function createGame(initialGameState = emptyGameState) {
 		counter: 0,
 		tickInterval: GAME_TICK_INTERVAL_MS, 
 		loop: null,
-
-		// start: function () {
-		// 	this.loop = setInterval(() => {
-		// 		this.gameTick();
-		// 	}, this.tickInterval);
-		// },
 		
 		start(onTickCallback) {
     		if (this.loop) clearInterval(this.loop);
@@ -383,18 +377,6 @@ export function createGame(initialGameState = emptyGameState) {
 			}, this.tickInterval);
 		},
 
-
-		// increaseSpeedProgress: function () {
-		// 	if (this.tickInterval > 100) {
-		// 		this.tickInterval -= 100; // or multiply by 0.9 for gradual speed-up
-		// 		console.log(`Speed increased! New tick: ${this.tickInterval}ms`);
-
-		// 		// Restart the loop at the new speed
-		// 		clearInterval(this.loop);
-		// 		this.start();
-		// 	}
- 
-		// },
 		increaseSpeedProgress(onTickCallback) {
 			const MIN_TICK = 400;
 			const SPEED_STEP = 200;
@@ -406,7 +388,6 @@ export function createGame(initialGameState = emptyGameState) {
 				this.start(onTickCallback); // restart loop with new speed
 			};
 		},
-
 
 		
 		/**

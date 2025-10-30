@@ -49,10 +49,6 @@ export function drawGame(game) {
         
         }
     }
-    // game.start(() => {
-    //     drawGame(game); // frontend redraws every tick
-    // });
-
 
     // Also update held-piece display whenever the main board is drawn
     try { drawHeldPiece(game); } catch (e) { /* ignore if UI not present */ }

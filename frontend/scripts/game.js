@@ -25,13 +25,6 @@ function initialiseGame() {
 
 }
 
-//    game.start();
-   
-
-
-
-
-
 
 function setupControls() {
     document.addEventListener('keydown', (event) => {
