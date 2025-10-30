@@ -16,6 +16,7 @@ function initialiseGame() {
         game.gameTick();
         drawGame(game);
         drawUpcomingTetrominoes(game);
+        
     }, GAME_TICK_INTERVAL_MS);
 
     return game;
