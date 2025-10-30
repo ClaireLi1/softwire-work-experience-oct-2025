@@ -1,5 +1,8 @@
+import { GAME_TICK_INTERVAL_MS } from "./game.js";
 import { BOARD_UNITS_HEIGHT, BOARD_UNITS_WIDTH } from "./gameUI.js"
 
+
+export var tickInterval = GAME_TICK_INTERVAL_MS;
 export const Tetromino = {
 	I_Piece: "I_Piece",
 	J_Piece: "J_Piece",
@@ -363,6 +366,49 @@ export function createGame(initialGameState = emptyGameState) {
 	const tetrisGame = {
 		gameState: initialGameState,
 		counter: 0,
+		tickInterval: GAME_TICK_INTERVAL_MS, 
+		loop: null,
+
+		// start: function () {
+		// 	this.loop = setInterval(() => {
+		// 		this.gameTick();
+		// 	}, this.tickInterval);
+		// },
+		
+		start(onTickCallback) {
+    		if (this.loop) clearInterval(this.loop);
+			this.loop = setInterval(() => {
+        		this.gameTick(); // backend updates
+				if (onTickCallback) onTickCallback(); // notify frontend
+			}, this.tickInterval);
+		},
+
+
+		// increaseSpeedProgress: function () {
+		// 	if (this.tickInterval > 100) {
+		// 		this.tickInterval -= 100; // or multiply by 0.9 for gradual speed-up
+		// 		console.log(`Speed increased! New tick: ${this.tickInterval}ms`);
+
+		// 		// Restart the loop at the new speed
+		// 		clearInterval(this.loop);
+		// 		this.start();
+		// 	}
+ 
+		// },
+		increaseSpeedProgress(onTickCallback) {
+			const MIN_TICK = 400;
+			const SPEED_STEP = 200;
+			console.log(`Current tick interval: ${this.tickInterval}ms`);
+
+			if (this.tickInterval > MIN_TICK) {
+				this.tickInterval -= SPEED_STEP;
+				console.log(`Speed increased! New tick: ${this.tickInterval}ms`);
+				this.start(onTickCallback); // restart loop with new speed
+			};
+		},
+
+
+		
 		/**
 		 * Progress the game forward one timestep
 		 */
@@ -581,7 +627,7 @@ export function createGame(initialGameState = emptyGameState) {
 		},
 
 		/**
-		 * Move the current tetromino down and increase fall speed
+		 * Move the current tetromino down 
 		 */
 		moveDown: function () {
 
@@ -636,7 +682,7 @@ export function createGame(initialGameState = emptyGameState) {
 
 			// Keep moving the tetromino down until it collides
 			while (!checkCollision(playfield, activeTetromino)) {
-				activeTetromino.position.y -= 1; // or += 1 depending on your coordinate system
+				activeTetromino.position.y -= 1; 
 			}
 
 			// Move it back up one step since it collided
@@ -647,7 +693,7 @@ export function createGame(initialGameState = emptyGameState) {
 			// this.getUpcomingTetrominoes();
 
 
-		},
+		},		
 
 		/**
 		 * Hold the current tetromino, swapping it for any currently held one

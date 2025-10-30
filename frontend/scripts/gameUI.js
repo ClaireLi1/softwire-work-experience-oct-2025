@@ -46,8 +46,13 @@ export function drawGame(game) {
                     BOARD_UNIT_PIXEL_SIZE
                 );
             }
+        
         }
     }
+    // game.start(() => {
+    //     drawGame(game); // frontend redraws every tick
+    // });
+
 
     // Also update held-piece display whenever the main board is drawn
     try { drawHeldPiece(game); } catch (e) { /* ignore if UI not present */ }
