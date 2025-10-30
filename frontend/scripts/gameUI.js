@@ -31,7 +31,15 @@ export function drawGame(game) {
             const tileColour = game.getTileAtPosition(x, y);
             if (tileColour !== null && tileColour !== undefined) {
                 gameContext.fillStyle = tileColour;
+                gameContext.strokeStyle = "black";
+                gameContext.lineWidth = 3;
                 gameContext.fillRect(
+                    x * BOARD_UNIT_PIXEL_SIZE,
+                    (BOARD_UNITS_HEIGHT - y - 1) * BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE
+                );
+                gameContext.strokeRect(
                     x * BOARD_UNIT_PIXEL_SIZE,
                     (BOARD_UNITS_HEIGHT - y - 1) * BOARD_UNIT_PIXEL_SIZE,
                     BOARD_UNIT_PIXEL_SIZE,
@@ -134,6 +142,8 @@ export function drawHeldPiece(game) {
 
     // Draw each tile in the held tetromino
     gameContext.fillStyle = colour;
+    gameContext.strokeStyle = "black"
+    gameContext.lineWidth = 3
 
     // Ensure the tetromino is centered in the canvas
     const offsetX = (canvasSize - tiles[0].length * BOARD_UNIT_PIXEL_SIZE) / 2;
@@ -146,6 +156,12 @@ export function drawHeldPiece(game) {
             // y-axis is flipped for display
             if (tiles[tiles.length-1-y][x] === 1) { 
                 gameContext.fillRect(
+                    offsetX + x * BOARD_UNIT_PIXEL_SIZE,
+                    offsetY + y * BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE,
+                    BOARD_UNIT_PIXEL_SIZE
+                );
+                gameContext.strokeRect(
                     offsetX + x * BOARD_UNIT_PIXEL_SIZE,
                     offsetY + y * BOARD_UNIT_PIXEL_SIZE,
                     BOARD_UNIT_PIXEL_SIZE,
