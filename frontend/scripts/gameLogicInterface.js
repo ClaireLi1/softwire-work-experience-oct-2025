@@ -168,7 +168,6 @@ function checkCollision(playfield, activeTetromino) {
 			}
 			const xValue = c + position.x
 			const yValue = (r + position.y) - 1
-			// const yValue = (len - 1 - r + position.y) - 1
 
 			if (playfield[yValue]) {
 				if (playfield[yValue][xValue]) {
@@ -352,6 +351,7 @@ export const emptyGameState = {
 	// A 10x20 array full of null values
 	playfield: new Array(BOARD_UNITS_HEIGHT).fill(null).map(() => new Array(BOARD_UNITS_WIDTH).fill(null)),
 	score: 0,
+	level: 1, // to act as a multiplier for score and speed
 	upcomingTetrominoes: Array.from({ length: 3 }, getRandomTetromino),
 	heldTetromino: null,
 	// Whether hold has been used for the currently active piece

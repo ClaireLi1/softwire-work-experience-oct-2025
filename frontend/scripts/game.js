@@ -1,7 +1,7 @@
 import { createGame, Tetromino } from "./gameLogicInterface.js"
 import { drawGame, drawGrid, drawUpcomingTetrominoes } from "./gameUI.js"
 
-const GAME_TICK_INTERVAL_MS = 1000;
+const GAME_TICK_INTERVAL_MS = 500;
 
 let game = initialiseGame();
 
@@ -16,7 +16,6 @@ function initialiseGame() {
         drawGame(game);
         drawUpcomingTetrominoes(game);
         game.gameTick();
-        
     }, GAME_TICK_INTERVAL_MS);
 
     return game;
@@ -52,11 +51,11 @@ function setupControls() {
                 game.holdCurrentTetromino();
                 drawGame(game);
                 break;
-            // case 'z':
-            // case 'Z':
-            //     game.rotateTetrominoAntiClockwise();
-            //     drawGame(game);
-            //     break;
+            case 'z':
+            case 'Z':
+                game.rotateTetrominoAntiClockwise();
+                drawGame(game);
+                break;
 
             /* Debug controls, will be removed for release */
             case 'i':
@@ -90,11 +89,11 @@ function setupControls() {
                 game.spawnPiece(Tetromino.T_Piece);
                 drawGame(game);
                 break;
-            case 'z':
-            case 'Z':
-                game.spawnPiece(Tetromino.Z_Piece);
-                drawGame(game);
-                break;
+            // case 'z':
+            // case 'Z':
+            //     game.spawnPiece(Tetromino.Z_Piece);
+            //     drawGame(game);
+            //     break;
      
 
             
