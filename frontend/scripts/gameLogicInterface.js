@@ -309,10 +309,8 @@ function OutOfBounds(playfield, activeTetromino, direction) {
 	return false;
 }
 
-function rotationCollision (playfield, activeTetromino, direction) {
-	const rotatedTiles = rotateArray(activeTetromino.tiles, direction);
-
-
+function rotationCollision (playfield, activeTetromino, rotatedTiles) {
+	
 	const testTetromino = {
 		...activeTetromino,
 		tiles: rotatedTiles
@@ -322,10 +320,10 @@ function rotationCollision (playfield, activeTetromino, direction) {
 	const collision = checkCollision(playfield,testTetromino);
 
 	if (!OutOfBounds && !collision) {
-		activeTetromino.tiles = rotatedTiles;
 		return false;
+	} else {
+		return true;
 	}
-	return true;
 }
 
 function testBoundaryChange (playfield,tetromino) {
@@ -364,10 +362,12 @@ export const emptyGameState = {
 export function createGame(initialGameState = emptyGameState) {
 	const tetrisGame = {
 		gameState: initialGameState,
+		counter: 0,
 		/**
 		 * Progress the game forward one timestep
 		 */
 		gameTick: function () {
+			console.log("Game tick: " + this.counter++);
 			// 1: Move currently active piece down
 
 			// 2: Lock piece in place if it can't move down anymore
@@ -382,17 +382,12 @@ export function createGame(initialGameState = emptyGameState) {
 			} else {
 				lockCollision(playfield, activeTetromino)
 				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
-				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
 				this.getUpcomingTetrominoes();
 			}
-
-
 
 			// 3: Clear any full lines
 			/* check all lines are full */
 			
-			
-
 			// 4: Increase score
 
 			// 5: Get new piece from upcoming tetrominoes
@@ -560,7 +555,11 @@ export function createGame(initialGameState = emptyGameState) {
 			// this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "cw")
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
-			rotationCollision (playfield, activeTetromino, "cw")
+			const rotatedTiles = rotateArray(activeTetromino.tiles, "cw");
+
+			if (!rotationCollision (playfield, activeTetromino, rotatedTiles)) {
+				activeTetromino.tiles = rotatedTiles;
+			}
 		},
 
 		/**
@@ -570,8 +569,11 @@ export function createGame(initialGameState = emptyGameState) {
 			// this.gameState.activeTetromino.tiles = rotateArray(this.gameState.activeTetromino.tiles, "acw")
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
+			const rotatedTiles = rotateArray(activeTetromino.tiles, "acw");
 
-			rotationCollision(playfield, activeTetromino, "acw")
+			if (!rotationCollision (playfield, activeTetromino, rotatedTiles)) {
+				activeTetromino.tiles = rotatedTiles;
+			}
 		},
 
 		/**
