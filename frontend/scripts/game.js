@@ -96,6 +96,7 @@ function setupControls() {
                 game.spawnPiece(Tetromino.Z_Piece);
                 drawGame(game);
                 break;
+     
 
             
             /* End debug controls */
