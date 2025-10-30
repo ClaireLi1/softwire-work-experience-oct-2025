@@ -207,12 +207,30 @@ function lockCollision(playfield, activeTetromino) {
 }
 
 /* add workaround for clearing non adjacent lines */
+/* add workaround for clearing non adjacent lines */
 function moveGridDown(playfield, yValue) {
 	for (let y = yValue; y<BOARD_UNITS_HEIGHT-1;y++) {
 		for (let x = 0; x < BOARD_UNITS_WIDTH; x++) {
 			playfield[y][x] = playfield[y+1][x]
 		}
 	}
+}
+
+
+function addToScore(score, numLines) {
+	if (numLines == 1) {
+		score += 40
+	}
+	else if (numLines == 2) {
+		score += 100
+	} else if (numLines == 3) {
+		score += 300
+	} else if (numLines == 4) {
+		score += 1200
+	}
+	console.log(score)
+	document.getElementById("score-container").innerText = "Score: " + score;
+	return score;
 }
 
 
@@ -372,6 +390,7 @@ export function createGame(initialGameState = emptyGameState) {
 			// 2: Lock piece in place if it can't move down anymore
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
+			// let score = this.gameState.score;
 
 			const collideValue = checkCollision(playfield, activeTetromino)
 
@@ -379,6 +398,7 @@ export function createGame(initialGameState = emptyGameState) {
 				this.gameState.activeTetromino.position.y -= 1;
 			} else {
 				lockCollision(playfield, activeTetromino)
+				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
 				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
 				this.getUpcomingTetrominoes();
 			}
@@ -388,9 +408,9 @@ export function createGame(initialGameState = emptyGameState) {
 			// 3: Clear any full lines
 			/* check all lines are full */
 			
+			
 
 			// 4: Increase score
-
 
 			// 5: Get new piece from upcoming tetrominoes
 
