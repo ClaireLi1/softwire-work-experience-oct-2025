@@ -61,52 +61,52 @@ function flipYAxis(tetrominoShapes) {
 /* separate library of tetros in preview (2x4 max) */
 export const previewTetros = {
 	I_Piece: [
-		[1,1,1,1],
-		[1,4]
+		[1, 1, 1, 1],
+		[1, 4]
 	],
 	L_Piece: [
-		[0,0,1],
-		[1,1,1],
-		[2,3]
+		[0, 0, 1],
+		[1, 1, 1],
+		[2, 3]
 	],
 	J_Piece: [
-		[1,0,0],
-		[1,1,1],
-		[2,3]
+		[1, 0, 0],
+		[1, 1, 1],
+		[2, 3]
 	],
 	O_Piece: [
-		[1,1],
-		[1,1],
-		[2,2]
+		[1, 1],
+		[1, 1],
+		[2, 2]
 	],
 	S_Piece: [
-		[0,1,1],
-		[1,1,0],
-		[2,3]
+		[0, 1, 1],
+		[1, 1, 0],
+		[2, 3]
 	],
 	Z_Piece: [
-		[1,1,0],
-		[0,1,1],
-		[2,3]
+		[1, 1, 0],
+		[0, 1, 1],
+		[2, 3]
 	],
 	T_Piece: [
-		[0,1,0],
-		[1,1,1],
-		[2,3]
+		[0, 1, 0],
+		[1, 1, 1],
+		[2, 3]
 	],
 }
 
 export function getTetrominoColor(piece) {
-    const colorMap = {
-        "I_Piece": "cyan",
-        "J_Piece": "blue",
-        "L_Piece": "orange",
-        "O_Piece": "yellow",
-        "S_Piece": "green",
-        "T_Piece": "purple",
-        "Z_Piece": "red"
-    };
-    return colorMap[piece];
+	const colorMap = {
+		"I_Piece": "cyan",
+		"J_Piece": "blue",
+		"L_Piece": "orange",
+		"O_Piece": "yellow",
+		"S_Piece": "green",
+		"T_Piece": "purple",
+		"Z_Piece": "red"
+	};
+	return colorMap[piece];
 }
 
 function getRandomTetromino() {
@@ -139,14 +139,14 @@ function rotateArray(tiles, direction) {
 	if (direction === "cw") {
 		for (let i = 0; i < len; i++) {
 			for (let j = 0; j < len; j++) {
-				newArray[i][j] = tiles[j][len-1 - i];
+				newArray[i][j] = tiles[j][len - 1 - i];
 			}
 		}
 	}
 	else {
 		for (let i = 0; i < len; i++) {
 			for (let j = 0; j < len; j++) {
-				newArray[j][len-1 - i] = tiles[i][j];
+				newArray[j][len - 1 - i] = tiles[i][j];
 			}
 		}
 	}
@@ -161,20 +161,20 @@ function checkCollision(playfield, activeTetromino) {
 
 	for (let r = 0; r < len; r++) {
 		for (let c = 0; c < len; c++) {
-			if(tiles[r][c] === 0) {
-				continue;				
+			if (tiles[r][c] === 0) {
+				continue;
 			}
 			const xValue = c + position.x
 			const yValue = (r + position.y) - 1
 			// const yValue = (len - 1 - r + position.y) - 1
-			
+
 			if (playfield[yValue]) {
 				if (playfield[yValue][xValue]) {
 					return true
 				}
 			}
 
-			if (yValue < 0){
+			if (yValue < 0) {
 				return true
 			}
 
@@ -184,26 +184,26 @@ function checkCollision(playfield, activeTetromino) {
 }
 
 function lockCollision(playfield, activeTetromino) {
-    const colour = activeTetromino.colour;
-    const tiles = activeTetromino.tiles;
-    const position = activeTetromino.position;
+	const colour = activeTetromino.colour;
+	const tiles = activeTetromino.tiles;
+	const position = activeTetromino.position;
 	const len = tiles.length;
 
-    for (let r = 0; r < len; r++) {
-        for (let c = 0; c < len; c++) {
-            if (tiles[r][c] === 1) {
-                const xValue = c + position.x;
-                // const yValue = len - 1 - r + position.y;
+	for (let r = 0; r < len; r++) {
+		for (let c = 0; c < len; c++) {
+			if (tiles[r][c] === 1) {
+				const xValue = c + position.x;
+				// const yValue = len - 1 - r + position.y;
 				const yValue = r + position.y;
 
-                if (yValue >= 0 && yValue < BOARD_UNITS_HEIGHT && xValue >= 0 && xValue < BOARD_UNITS_WIDTH) {
-                    playfield[yValue][xValue] = colour;
-                }
-            }
-        }
-    }
+				if (yValue >= 0 && yValue < BOARD_UNITS_HEIGHT && xValue >= 0 && xValue < BOARD_UNITS_WIDTH) {
+					playfield[yValue][xValue] = colour;
+				}
+			}
+		}
+	}
 
-	
+
 }
 
 function OutOfBounds(playfield, activeTetromino, direction) {
@@ -263,17 +263,17 @@ export function createGame(initialGameState = emptyGameState) {
 		 */
 		gameTick: function () {
 			// 1: Move currently active piece down
-			
+
 			// 2: Lock piece in place if it can't move down anymore
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
 
-			const collideValue = checkCollision(playfield,activeTetromino)
+			const collideValue = checkCollision(playfield, activeTetromino)
 
 			if (!collideValue) {
 				this.gameState.activeTetromino.position.y -= 1;
 			} else {
-				lockCollision(playfield,activeTetromino)
+				lockCollision(playfield, activeTetromino)
 				this.getUpcomingTetrominoes();
 			}
 
@@ -428,18 +428,18 @@ export function createGame(initialGameState = emptyGameState) {
 		/**
 		 * Move the current tetromino down and increase fall speed
 		 */
-		moveDown: function() {
+		moveDown: function () {
 
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
 			const upcomingTetromino = this.gameState.upcomingTetrominoes
 
-			const collideValue = checkCollision(playfield,activeTetromino)
+			const collideValue = checkCollision(playfield, activeTetromino)
 
 			if (!collideValue) {
 				this.gameState.activeTetromino.position.y -= 1;
 			} else {
-				lockCollision(playfield,activeTetromino)
+				lockCollision(playfield, activeTetromino)
 				this.getUpcomingTetrominoes();
 			}
 		},
@@ -462,32 +462,47 @@ export function createGame(initialGameState = emptyGameState) {
 		 * Instantly drop the current tetromino as far as it goes and lock it in place
 		 */
 		instantDropTetromino: function () {
+			const playfield = this.gameState.playfield;
+			const activeTetromino = this.gameState.activeTetromino;
+
+			// Keep moving the tetromino down until it collides
+			while (!checkCollision(playfield, activeTetromino)) {
+				activeTetromino.position.y -= 1; // or += 1 depending on your coordinate system
+			}
+
+			// Move it back up one step since it collided
+			// activeTetromino.position.y += 1;
+
+			// Lock the tetromino in place
+			lockCollision(playfield, activeTetromino);
+			// this.getUpcomingTetrominoes();
+
 
 		},
 
 		/**
 		 * Hold the current tetromino, swapping it for any currently held one
 		 */
-		holdCurrentTetromino: function () {
+		holdCurrentTetromino: function() {
 			const state = this.gameState;
 			// Only allow hold once per active piece
 			if (state.holdUsed) return;
-
+	
 			// Name of the currently active tetromino
 			const activeName = state.activeTetromino && state.activeTetromino.name;
 			if (!activeName) return;
-
+	
 			if (state.heldTetromino) {
 				const previouslyHeld = state.heldTetromino;
 				// Put active into held
 				state.heldTetromino = activeName;
-
+	
 				// Make previously held the new active tetromino at spawn
 				state.activeTetromino = newActiveTetromino(previouslyHeld);
 			} else {
 				// No held piece: move active to held and spawn next from upcoming list
 				state.heldTetromino = activeName;
-
+	
 				// Pull next tetromino from upcoming; if present remove it and replenish the queue
 				let nextName;
 				if (state.upcomingTetrominoes && state.upcomingTetrominoes.length > 0) {
@@ -498,27 +513,16 @@ export function createGame(initialGameState = emptyGameState) {
 					// Fallback: generate a random tetromino if the queue is unexpectedly empty
 					nextName = getRandomTetromino();
 				}
-
+	
 				state.activeTetromino = newActiveTetromino(nextName);
 			}
-
+	
 			// mark hold used for this active piece
 			state.holdUsed = true;
-
-			
-
-			
-
+	
 		},
-
-
-		/**
-		 * Load the next tetromino from the upcoming queue and add a new random one to the queue
-		 */
-		loadNextTetromino: function () {
-
-		},
-
+		
+	
 		/**
 		 * Debug controls, will be removed for release
 		 * Spawn a specific piece at the top of the board (for testing purposes)
@@ -527,5 +531,10 @@ export function createGame(initialGameState = emptyGameState) {
 			this.gameState.activeTetromino = newActiveTetromino(tetrominoName);
 		}
 	};
+
+
+
+
+	
 	return tetrisGame;
 };
