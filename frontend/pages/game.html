@@ -12,6 +12,19 @@
     </head>
 
     <body>
+        <div id="game-over-message" style="
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: red;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            text-shadow: 2px 2px black;
+        "> GAME OVER
+        </div>
         <div class="tetris-container">
             <canvas id="game-grid" class="game-component-container"></canvas>
             <div id="game-sidebar">

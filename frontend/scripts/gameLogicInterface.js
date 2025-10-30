@@ -379,16 +379,16 @@ export function createGame(initialGameState = emptyGameState) {
 
 			if (!collideValue) {
 				this.gameState.activeTetromino.position.y -= 1;
-				console.log("doesn't collide");
+				// console.log("doesn't collide");
 			} else {
 				lockCollision(playfield,activeTetromino)
 				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
 				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
 				const GameOver = this.isGameOver();
-				console.log("collision happens");
-				console.log(GameOver);
+				// console.log("collision happens");
+				// console.log(GameOver);
 				if (GameOver) {
-					display()
+					this.displayGameOver()
 				} else {
 					this.getUpcomingTetrominoes();
 				}
@@ -402,14 +402,31 @@ export function createGame(initialGameState = emptyGameState) {
 			// 5: Get new piece from upcoming tetrominoes
 
 
-		},
+			// 5: Get new piece from upcoming tetrominoes
+
+
+			}, 
+
+		//freeze the tetromino
+
+		// isFreeze : function (){
+		// 	if (this.isGameOver) //stop the key and display the game over display (call display())
+		// },
+
+		//Display the game over display 
+		displayGameOver: function() {
+			const message = document.getElementById("game-over-message");
+			if (message) {
+				message.style.display = "block";
+			}
+		}, 
 
 		/**
 		 * Return if the game is over
 		 * @return {boolean}
 		 */
 		isGameOver: function () {
-			console.log("called isGameOver");
+			// console.log("called isGameOver");
 			const playfield = this.gameState.playfield;
 			const activeTetromino = this.gameState.activeTetromino;
 			const tiles = activeTetromino.tiles;
@@ -433,7 +450,7 @@ export function createGame(initialGameState = emptyGameState) {
 					}
 				}
 			}
-			console.log("finished loop")
+			// console.log("finished loop")
 			return false; // No collision, game is not over yet
 		},
 
