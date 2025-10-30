@@ -23,7 +23,7 @@ function initialiseGame() {
 
 function setupControls() {
     document.addEventListener('keydown', (event) => {
-        if (!isGameOver) { 
+        if (!game.isGameOver()) { 
             switch(event.key) {
                 
             case ' ': // Space
@@ -111,7 +111,7 @@ function setupControls() {
             //     break;
      
 
-            
+    
             /* End debug controls */
         }
     }

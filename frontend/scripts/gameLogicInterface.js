@@ -419,16 +419,16 @@ export function createGame(initialGameState = emptyGameState) {
 			// Check if the tetromino at spawn position would collide
 			for (let r = 0; r < len; r++) {
 				for (let c = 0; c < len; c++) {
-					console.log("inside nested loop");
+					// console.log("inside nested loop");
 					if (tiles[r][c] === 0) continue; // Skip empty tiles
 					const xValue = c + position.x;
 					const yValue = r + position.y; // Checking the topmost row
-					console.log("xValue: " + xValue);
-					console.log("yValue: " + yValue);
+					// console.log("xValue: " + xValue);
+					// console.log("yValue: " + yValue);
 
 					// Check if the position is outside the bounds or collides with an existing block
 					if (yValue >= BOARD_UNITS_HEIGHT || xValue < 0 || xValue >= BOARD_UNITS_WIDTH) {
-						console.log("condition is met")
+						// console.log("condition is met")
 						return true; // Game over if there's a collision
 					}
 				}
