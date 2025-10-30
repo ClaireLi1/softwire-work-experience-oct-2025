@@ -11,13 +11,12 @@ function initialiseGame() {
     drawGrid();
     setupControls();
 
-    console.log(game);
-
     // Start the game loop
     setInterval(() => {
         game.gameTick();
         drawGame(game);
         drawUpcomingTetrominoes(game);
+        
     }, GAME_TICK_INTERVAL_MS);
 
     return game;

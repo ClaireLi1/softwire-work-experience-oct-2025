@@ -196,14 +196,49 @@ function lockCollision(playfield, activeTetromino) {
 				// const yValue = len - 1 - r + position.y;
 				const yValue = r + position.y;
 
-				if (yValue >= 0 && yValue < BOARD_UNITS_HEIGHT && xValue >= 0 && xValue < BOARD_UNITS_WIDTH) {
-					playfield[yValue][xValue] = colour;
-				}
-			}
+                if (yValue >= 0 && yValue < BOARD_UNITS_HEIGHT && xValue >= 0 && xValue < BOARD_UNITS_WIDTH) {
+                    playfield[yValue][xValue] = colour;
+                }
+            }
+        }
+    }
+}
+
+function moveGridDown(playfield, yValue) {
+	for (let y = yValue; y<BOARD_UNITS_HEIGHT-1;y++) {
+		for (let x = 0; x < BOARD_UNITS_WIDTH; x++) {
+			playfield[y][x] = playfield[y+1][x]
 		}
 	}
+}
 
+function clearFullLine(playfield, yValue) {
+	/* setTimeout (() => { */
+	for (let i = 0; i < BOARD_UNITS_WIDTH; i++) {
+		playfield[yValue][i] = "white";
+	}
+		// }, "10");
+	moveGridDown(playfield, yValue)
+}
 
+/* only check after piece has been locked in */
+function checkFullLines(playfield, yValue) {
+	let full = true
+	for (let i=0; i < BOARD_UNITS_WIDTH; i++) {
+		if (playfield[yValue][i] == null) {
+			full = false;
+			break
+		}
+	}
+	if (full) {
+		clearFullLine(playfield, yValue)
+	}
+}
+
+function checkAllFullLines(playfield) {
+	for (let i = 0; i < BOARD_UNITS_HEIGHT; i++) {
+		checkFullLines(playfield, i)
+	}
 }
 
 function OutOfBounds(playfield, activeTetromino, direction) {
@@ -281,7 +316,8 @@ export function createGame(initialGameState = emptyGameState) {
 
 
 			// 3: Clear any full lines
-
+			/* check all lines are full */
+			checkAllFullLines(playfield)
 
 			// 4: Increase score
 
