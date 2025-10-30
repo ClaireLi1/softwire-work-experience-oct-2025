@@ -213,11 +213,13 @@ function moveGridDown(playfield, yValue) {
 }
 
 function clearFullLine(playfield, yValue) {
-	setTimeout (() => {
-	for (let i = 0; i<BOARD_UNITS_WIDTH; i++) {
+	/* setTimeout (() => { */
+	for (let i = 0; i < BOARD_UNITS_WIDTH; i++) {
 		playfield[yValue][i] = "white";
-		}, "10");
+	}
+		// }, "10");
 	moveGridDown(playfield, yValue)
+}
 
 /* only check after piece has been locked in */
 function checkFullLines(playfield, yValue) {
@@ -229,12 +231,11 @@ function checkFullLines(playfield, yValue) {
 		}
 	}
 	if (full) {
-		console.log(`row ${yValue} full`) /* clear line and move above blockds down */
 		clearFullLine(playfield, yValue)
 	}
 }
 
-export function checkAllFullLines(playfield) {
+function checkAllFullLines(playfield) {
 	for (let i = 0; i < BOARD_UNITS_HEIGHT; i++) {
 		checkFullLines(playfield, i)
 	}
