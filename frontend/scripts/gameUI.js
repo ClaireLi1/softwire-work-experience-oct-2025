@@ -63,8 +63,6 @@ function drawPreviewTetromino(tetro, offset) {
         pieceWidth = previewTetros[tetro][2][1]
     }
 
-    console.log("this is piece " + tetro)
-
     ctx.fillStyle = getTetrominoColor(tetro)
     ctx.strokeStyle = "black"
     ctx.lineWidth = 3
@@ -90,7 +88,6 @@ export function drawUpcomingTetrominoes(game) {
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[0], 0)
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[1], 120)
     drawPreviewTetromino(game.gameState.upcomingTetrominoes[2], 240)
-    console.log(game.gameState.upcomingTetrominoes)
 }
 
 function addVerticalGameLines(gameContext) {
