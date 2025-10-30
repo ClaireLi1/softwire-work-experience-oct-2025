@@ -281,7 +281,10 @@ export function createGame(initialGameState = emptyGameState) {
 
 
 			// 3: Clear any full lines
-
+			/* check all lines are full */
+			function checkFullLines(game) {
+				
+			}
 
 			// 4: Increase score
 
