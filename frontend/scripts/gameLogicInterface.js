@@ -223,10 +223,20 @@ function OutOfBounds(playfield, activeTetromino, direction) {
 				if (xValue - 1 < 0) {
 					return true
 				}
+				if (playfield[xValue]) {
+					if (playfield[yValue][xValue - 1]) {
+						return true
+					}
+				}
 			} else if (direction == "right") {
 				console.log("right")
 				if (xValue + 1 >= BOARD_UNITS_WIDTH) {
 					return true
+				}
+				if (playfield[xValue]) {
+					if (playfield[yValue][xValue + 1]) {
+						return true
+					}
 				}
 			}
 		}
