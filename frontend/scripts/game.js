@@ -1,7 +1,7 @@
 import { createGame, Tetromino, } from "./gameLogicInterface.js"
 import { drawGame, drawGrid, drawUpcomingTetrominoes } from "./gameUI.js"
 
-export var GAME_TICK_INTERVAL_MS = 1000;
+export var GAME_TICK_INTERVAL_MS = 500;
 
 let game = initialiseGame();
 

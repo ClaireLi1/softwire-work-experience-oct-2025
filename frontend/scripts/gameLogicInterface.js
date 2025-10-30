@@ -378,7 +378,7 @@ export function createGame(initialGameState = emptyGameState) {
 		},
 
 		increaseSpeedProgress(onTickCallback) {
-			const MIN_TICK = 400;
+			const MIN_TICK = 200;
 			const SPEED_STEP = 200;
 			console.log(`Current tick interval: ${this.tickInterval}ms`);
 
