@@ -209,7 +209,7 @@ function OutOfBounds(playfield, activeTetromino, direction) {
     const position = activeTetromino.position;
 	const len = tiles.length;
 
-	for (let r = 0; r<len; r++) {
+	for (let r = 0; r < len; r++) {
 		for (let c = 0; c < len; c++) {
 			if(tiles[r][c] === 0) {
 				continue;				
@@ -219,7 +219,6 @@ function OutOfBounds(playfield, activeTetromino, direction) {
 			const yValue = r + position.y
 
 			if (direction == "left") {
-				console.log("left")
 				if (xValue - 1 < 0) {
 					return true
 				}
@@ -229,7 +228,6 @@ function OutOfBounds(playfield, activeTetromino, direction) {
 					}
 				}
 			} else if (direction == "right") {
-				console.log("right")
 				if (xValue + 1 >= BOARD_UNITS_WIDTH) {
 					return true
 				}
