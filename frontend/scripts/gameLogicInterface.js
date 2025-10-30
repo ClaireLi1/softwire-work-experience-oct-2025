@@ -204,6 +204,27 @@ function lockCollision(playfield, activeTetromino) {
     }
 }
 
+function OutOfBounds(playfield, activeTetromino) {
+	const tiles = activeTetromino.tiles;
+    const position = activeTetromino.position;
+
+	for (let r = 0; r<4; r++) {
+		for (let c = 0; c < 4;c++) {
+			if(tiles[r][c] === 0) {
+				continue;				
+			}
+			const xValue = c + position.x
+			const yValue = r + position.y
+
+			if ([xValue + 1] > BOARD_UNITS_WIDTH || (xValue - 1) < 0) {
+				return true
+			}
+
+		}
+
+	}
+
+}
 
 export const emptyGameState = {
 	// A 10x20 array full of null values
