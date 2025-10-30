@@ -153,6 +153,8 @@ export function drawHeldPiece(game) {
                 );
             }
         }
-    }
-}
+    };
 
+
+    
+}
