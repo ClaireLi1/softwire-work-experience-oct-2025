@@ -12,6 +12,21 @@
     </head>
 
     <body>
+        <div id="game-over-message" style="
+            display: none;
+            position: absolute;
+            background:white; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 48px;
+            color: red;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 2px 2px black;
+        "> GAME OVER Press enter to restart game</div>
         <div class="tetris-container">
             <canvas id="game-grid" class="game-component-container"></canvas>
             <div id="game-sidebar">
