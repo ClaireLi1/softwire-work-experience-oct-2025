@@ -233,23 +233,6 @@ function addToScore(score, numLines) {
 	return score;
 }
 
-
-function addToScore(score, numLines) {
-	if (numLines == 1) {
-		score += 40
-	}
-	else if (numLines == 2) {
-		score += 100
-	} else if (numLines == 3) {
-		score += 300
-	} else if (numLines == 4) {
-		score += 1200
-	}
-	console.log(score)
-	document.getElementById("score-container").innerText = "Score: " + score;
-	return score;
-}
-
 function clearFullLine(playfield, yValue) {
 	/* setTimeout (() => { */
 	for (let i = 0; i < BOARD_UNITS_WIDTH; i++) {
