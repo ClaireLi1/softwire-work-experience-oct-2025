@@ -6,7 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../styles/game.css">
         <script type="module" src = "../scripts/game.js"></script>
-        <audio controls autoplay loop src="../assets/Tetris Music.mp3"></audio>
+        <audio controls autoplay loop>
+            <source src="../assets/Tetris Music.mp3">
+        </audio>
 
         <title>Tetris Game</title>
     </head>
@@ -30,7 +32,7 @@
         <div class="tetris-container">
             <canvas id="game-grid" class="game-component-container"></canvas>
             <div id="game-sidebar">
-                <canvas id="upcoming-pieces-container" class="game-component-container" height="400px"></canvas>
+                <canvas id="upcoming-pieces-container" class="game-component-container" height="411px"></canvas>
             
                 <div>
                     <p id="text-overlay">HOLD</p>
