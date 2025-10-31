@@ -51,6 +51,7 @@ body {
         #score-container {
             padding: 5px;
             background-color: lightgray;
+            border: 3px solid black;
         }
 
     }

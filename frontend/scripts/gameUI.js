@@ -100,14 +100,14 @@ export function drawUpcomingTetrominoes(game) {
 }
 
 function addVerticalGameLines(gameContext) {
-    for (var xPosition=0; xPosition<=BOARD_WIDTH; xPosition = xPosition + BOARD_UNIT_PIXEL_SIZE) {
+    for (var xPosition = BOARD_UNIT_PIXEL_SIZE; xPosition < BOARD_WIDTH; xPosition = xPosition + BOARD_UNIT_PIXEL_SIZE) {
         gameContext.moveTo(xPosition, 0);
         gameContext.lineTo(xPosition, BOARD_HEIGHT);
     }
 }
 
 function addHorizontalGameLines(gameContext) {
-    for (var yPosition = 0; yPosition <= BOARD_HEIGHT; yPosition = yPosition + BOARD_UNIT_PIXEL_SIZE) {
+    for (var yPosition = BOARD_UNIT_PIXEL_SIZE; yPosition < BOARD_HEIGHT; yPosition = yPosition + BOARD_UNIT_PIXEL_SIZE) {
         gameContext.moveTo(0, yPosition);
         gameContext.lineTo(BOARD_WIDTH, yPosition);
     }

@@ -230,7 +230,6 @@ function addToScore(score, numLines) {
 	} else if (numLines == 4) {
 		score += 1200
 	}
-	console.log(score)
 	document.getElementById("score-container").innerText = "Score: " + score;
 	return score;
 }
