@@ -1,8 +1,6 @@
 import { GAME_TICK_INTERVAL_MS } from "./game.js";
 import { BOARD_UNITS_HEIGHT, BOARD_UNITS_WIDTH } from "./gameUI.js"
-
-
-
+import { drawGame, drawUpcomingTetrominoes } from "./gameUI.js"
 
 export var tickInterval = GAME_TICK_INTERVAL_MS;
 export const Tetromino = {
@@ -220,10 +218,12 @@ function moveGridDown(playfield, yValue) {
 	}
 }
 
-function increaseLevel(level, oldScore, score) {
-	console.log(`increase level: old score is ${oldScore}, new score is ${score}`)
-	console.log(level)
+function increaseLevel(level, oldScore, score, game) {
 	if (Math.floor(score/1000) !== Math.floor(oldScore/1000)) {
+		game.increaseSpeedProgress( () => {
+			drawGame(game);
+			drawUpcomingTetrominoes(game);
+		});
 		return level + Math.abs((Math.floor(oldScore/1000) - Math.floor(score/1000)))
 	} else {
 		console.log("level is not being changed")
@@ -409,7 +409,7 @@ export function createGame(initialGameState = emptyGameState) {
 			lockCollision(playfield, activeTetromino)
 			
 			this.gameState.score = checkAllFullLines(playfield, this.gameState.score, this.gameState.level)
-			this.gameState.level = increaseLevel(this.gameState.level, oldScore, this.gameState.score)
+			this.gameState.level = increaseLevel(this.gameState.level, oldScore, this.gameState.score, this)
 			console.log(`level has been changed to ${this.gameState.level}`)
 			
 			console.log(this.gameState.level)
