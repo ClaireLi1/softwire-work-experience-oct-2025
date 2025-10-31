@@ -114,8 +114,9 @@ function setupControls() {
      
             case 'q':
             case 'Q':
-                game.increaseSpeedProgress(() => {drawGame(game);
-                drawUpcomingTetrominoes(game);
+                game.increaseSpeedProgress( () => {
+                    drawGame(game);
+                    drawUpcomingTetrominoes(game);
                 });
                 
                 break;
