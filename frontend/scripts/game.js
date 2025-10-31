@@ -1,7 +1,7 @@
 import { createGame, Tetromino, } from "./gameLogicInterface.js"
 import { drawGame, drawGrid, drawUpcomingTetrominoes } from "./gameUI.js"
 
-export var GAME_TICK_INTERVAL_MS = 500;
+export var GAME_TICK_INTERVAL_MS = 1000;
 
 let game = initialiseGame();
 
@@ -11,7 +11,8 @@ function initialiseGame() {
     drawGrid();
     setupControls();
 
-    console.log(game);
+    drawGame(game);
+    drawUpcomingTetrominoes(game);
 
     game.start(() => {
         drawGame(game); // frontend redraws every tick

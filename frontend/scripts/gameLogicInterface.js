@@ -389,7 +389,19 @@ export function createGame(initialGameState = emptyGameState) {
 			};
 		},
 
-		
+		lockPiece: function () {
+			const playfield = this.gameState.playfield
+			const activeTetromino = this.gameState.activeTetromino
+			lockCollision(playfield, activeTetromino)
+			this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
+			const GameOver = this.isGameOver();
+			if (GameOver) {
+				this.displayGameOver()
+			} else {
+				this.getUpcomingTetrominoes();
+			}
+		},
+
 		/**
 		 * Progress the game forward one timestep
 		 */
@@ -408,17 +420,7 @@ export function createGame(initialGameState = emptyGameState) {
 				this.gameState.activeTetromino.position.y -= 1;
 				// console.log("doesn't collide");
 			} else {
-				lockCollision(playfield,activeTetromino)
-				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
-				this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
-				const GameOver = this.isGameOver();
-				// console.log("collision happens");
-				// console.log(GameOver);
-				if (GameOver) {
-					this.displayGameOver()
-				} else {
-					this.getUpcomingTetrominoes();
-				}
+				this.lockPiece();
 			}
 
 			// 3: Clear any full lines
@@ -621,8 +623,7 @@ export function createGame(initialGameState = emptyGameState) {
 			if (!collideValue) {
 				this.gameState.activeTetromino.position.y -= 1;
 			} else {
-				lockCollision(playfield, activeTetromino)
-				this.getUpcomingTetrominoes();
+				this.lockPiece();
 			}
 		},
 
@@ -670,9 +671,7 @@ export function createGame(initialGameState = emptyGameState) {
 			// activeTetromino.position.y += 1;
 
 			// Lock the tetromino in place
-			lockCollision(playfield, activeTetromino);
-			// this.getUpcomingTetrominoes();
-
+			this.lockPiece();
 
 		},		
 
