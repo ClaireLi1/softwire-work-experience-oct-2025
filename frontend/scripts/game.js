@@ -68,58 +68,58 @@ function setupControls() {
                 game.holdCurrentTetromino();
                 drawGame(game);
                     break;
-                // case 'z':
-                // case 'Z':
-                //     game.rotateTetrominoAntiClockwise();
-                //     drawGame(game);
-                //     break;
+            case 'z':
+            case 'Z':
+                game.rotateTetrominoAntiClockwise();
+                drawGame(game);
+                break;
 
             /* Debug controls, will be removed for release */
-            case 'i':
-            case 'I':
-                game.spawnPiece(Tetromino.I_Piece);
-                drawGame(game);
-                break;
+            // case 'i':
+            // case 'I':
+            //     game.spawnPiece(Tetromino.I_Piece);
+            //     drawGame(game);
+            //     break;
             
-            case 'j':
-            case 'J':
-                game.spawnPiece(Tetromino.J_Piece);
-                drawGame(game);
-                break;
-            case 'l':
-            case 'L':
-                game.spawnPiece(Tetromino.L_Piece);
-                drawGame(game);
-                break;
-            case 'o':
-            case 'O':
-                game.spawnPiece(Tetromino.O_Piece);
-                drawGame(game);
-                break;
-            case 's':
-            case 'S':
-                game.spawnPiece(Tetromino.S_Piece);
-                drawGame(game);
-                break;
-            case 't':
-            case 'T':
-                game.spawnPiece(Tetromino.T_Piece);
-                drawGame(game);
-                break;
+            // case 'j':
+            // case 'J':
+            //     game.spawnPiece(Tetromino.J_Piece);
+            //     drawGame(game);
+            //     break;
+            // case 'l':
+            // case 'L':
+            //     game.spawnPiece(Tetromino.L_Piece);
+            //     drawGame(game);
+            //     break;
+            // case 'o':
+            // case 'O':
+            //     game.spawnPiece(Tetromino.O_Piece);
+            //     drawGame(game);
+            //     break;
+            // case 's':
+            // case 'S':
+            //     game.spawnPiece(Tetromino.S_Piece);
+            //     drawGame(game);
+            //     break;
+            // case 't':
+            // case 'T':
+            //     game.spawnPiece(Tetromino.T_Piece);
+            //     drawGame(game);
+            //     break;
             // case 'z':
             // case 'Z':
             //     game.spawnPiece(Tetromino.Z_Piece);
             //     drawGame(game);
             //     break;
      
-            case 'q':
-            case 'Q':
-                game.increaseSpeedProgress( () => {
-                    drawGame(game);
-                    drawUpcomingTetrominoes(game);
-                });
+            // case 'q':
+            // case 'Q':
+            //     game.increaseSpeedProgress( () => {
+            //         drawGame(game);
+            //         drawUpcomingTetrominoes(game);
+            //     });
                 
-                break;
+            //     break;
      
 
     
