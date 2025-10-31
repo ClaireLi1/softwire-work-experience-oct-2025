@@ -123,7 +123,13 @@ function setupControls() {
 
     
             /* End debug controls */
+            }
+        } else {
+            document.addEventListener("keydown", function(event){
+                if (event.key === "Enter") {
+                    location.reload();
+                }
+            });
         }
-    }
     });
 }
