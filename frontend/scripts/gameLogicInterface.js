@@ -2,6 +2,8 @@ import { GAME_TICK_INTERVAL_MS } from "./game.js";
 import { BOARD_UNITS_HEIGHT, BOARD_UNITS_WIDTH } from "./gameUI.js"
 
 
+
+
 export var tickInterval = GAME_TICK_INTERVAL_MS;
 export const Tetromino = {
 	I_Piece: "I_Piece",
@@ -218,8 +220,19 @@ function moveGridDown(playfield, yValue) {
 	}
 }
 
+function increaseLevel(level, oldScore, score) {
+	console.log(`increase level: old score is ${oldScore}, new score is ${score}`)
+	console.log(level)
+	if (Math.floor(score/1000) !== Math.floor(oldScore/1000)) {
+		return level + Math.abs((Math.floor(oldScore/1000) - Math.floor(score/1000)))
+	} else {
+		console.log("level is not being changed")
+		return level
+	}
+}
 
-function addToScore(score, numLines) {
+function addToScore(score, numLines, level) {
+	console.log(level)
 	if (numLines == 1) {
 		score += 40
 	}
@@ -230,7 +243,6 @@ function addToScore(score, numLines) {
 	} else if (numLines == 4) {
 		score += 1200
 	}
-	console.log(score)
 	document.getElementById("score-container").innerText = "Score: " + score;
 	return score;
 }
@@ -258,7 +270,7 @@ function checkFullLine(playfield, yValue) {
 	};
 }
 
-function checkAllFullLines(playfield, score) {
+function checkAllFullLines(playfield, score, level) {
 	let numFullLines = 0;
 	let yVals = [];
 	for (let row = 0; row < BOARD_UNITS_HEIGHT; row++) {
@@ -270,7 +282,8 @@ function checkAllFullLines(playfield, score) {
 	for (let i = 0; i < numFullLines; i++) {
 		clearFullLine(playfield, (yVals[i]-i));
 	};
-	return addToScore(score, numFullLines);
+	return addToScore(score, numFullLines, level);
+	// fix calling, addtoscore has to be called insie gametick
 }
 
 function OutOfBounds(playfield, activeTetromino, direction) {
@@ -392,8 +405,14 @@ export function createGame(initialGameState = emptyGameState) {
 		lockPiece: function () {
 			const playfield = this.gameState.playfield
 			const activeTetromino = this.gameState.activeTetromino
+			var oldScore = this.gameState.score
 			lockCollision(playfield, activeTetromino)
-			this.gameState.score = checkAllFullLines(playfield, this.gameState.score)
+			
+			this.gameState.score = checkAllFullLines(playfield, this.gameState.score, this.gameState.level)
+			this.gameState.level = increaseLevel(this.gameState.level, oldScore, this.gameState.score)
+			console.log(`level has been changed to ${this.gameState.level}`)
+			
+			console.log(this.gameState.level)
 			const GameOver = this.isGameOver();
 			if (GameOver) {
 				this.displayGameOver()
@@ -422,6 +441,8 @@ export function createGame(initialGameState = emptyGameState) {
 			} else {
 				this.lockPiece();
 			}
+
+			
 
 			// 3: Clear any full lines
 			/* check all lines are full */
